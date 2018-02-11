@@ -5,12 +5,21 @@
    function preventBack(){window.history.forward();}
     setTimeout("preventBack()", 0);
     window.onunload=function(){null};
+    function playNotificationSound() {
+      var notification = new Audio('audio/notification.mp3');
+      notification.play();
+    }
+    function playButtonSound() {
+      var playButton = new Audio('audio/playButton.mp3');
+      playButton.play();
+    }
   </script>
   <style>
     button {
-      padding: 10px;
+      padding: 5px;
       font-size: 25pt;
-      width: 400px;
+      width: 300px;
+      margin: 20px;
     }
     .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -25,8 +34,8 @@
   <title>Phone Calls View</title>
   <?php include 'style.php'; ?>
 </head>
-<body>
-
+<body onload="playNotificationSound();">
+<button type="button" onclick="playButtonSound();" style="width:auto;">Play</button>
   <h2 class="phone_number">
 <?php
 include 'mysqlConnect.php';
@@ -38,7 +47,7 @@ if(isset($_GET["status_id"]) && isset($_GET["resident_id"])) {
     last_called_date = date(now())
     WHERE resident_id = " . $_GET['resident_id']
   );
-  sleep(10);
+  header('Location: betweenCalls.php');
 }
 $res=$con->query("
 SELECT *
