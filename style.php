@@ -53,6 +53,8 @@ table {
 }
 a {
   color: lightgreen;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>';
 ?>
