@@ -2,7 +2,7 @@
 echo '
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
+body, button, h2 {
   ';
 include 'mysqlConnect.php';
 $res=$con->query("SELECT * FROM styles");
@@ -55,6 +55,18 @@ a {
   color: lightgreen;
   text-decoration: underline;
   cursor: pointer;
+}
+button {
+  background-color: #cccccc;
+  color: black;
+  font-weight: bold;
+  margin: 10px;
+}
+h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  line-height: 14px;
 }
 </style>';
 ?>

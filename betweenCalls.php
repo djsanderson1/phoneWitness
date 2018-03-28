@@ -15,9 +15,9 @@
     }
   </script>
   <body onload="timedPhoneCall();">
-    <p id="waitMsg">Please wait while the next phone number is loaded.</p>
+    <p id="waitMsg">Please pass this device to the next person.</p>
     <p id="showNext" style="display:none;">Click the link below when ready to make a call:<br><br>
-      <a href="standard.php">Make a Call</a>
+      <a href="activity.php">Make a Call</a>
     </p>
   </body>
 </html>

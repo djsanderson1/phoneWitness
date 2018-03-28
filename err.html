@@ -1,0 +1,110 @@
+
+<!doctype html>
+<html>
+<head>
+  <script type = "text/javascript" >
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+    function playNotificationSound() {
+      var notification = new Audio('audio/notification.mp3');
+      notification.play();
+    }
+    function playButtonSound() {
+      var playButton = new Audio('audio/playButton.mp3');
+      playButton.play();
+    }
+    function disconnected() {
+      result = confirm('Are you sure that 505-831-0647 is disconnected?');
+      if(result){
+        location.href='standard.php?status_id=1&resident_id=1';
+      }
+    }
+  </script>
+  <style>
+    button {
+      padding: 5px;
+      font-size: 25pt;
+      width: 300px;
+      margin: 20px;
+    }
+    .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+  </style>
+  <title>Phone Calls View</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  background-color:black;color:white;font-family:arial;font-size:16pt;
+}
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+@media only screen and (min-device-width: 500px) {
+  li.navbar {
+      float: left;
+  }
+}
+@media only screen and (max-device-width: 499px) {
+  li.navbar {
+      text-align: left;
+  }
+  body {
+    width: 100%;
+  }
+}
+li.navbar a.navbar {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li.navbar a:hover {
+    background-color: #111;
+}
+th {
+  background-color: #555;
+}
+table {
+  border: 1px white solid;
+}
+a {
+  color: lightgreen;
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style></head>
+<body onload="playNotificationSound();">
+<button type="button" onclick="playButtonSound();" style="width:auto;">Play</button>
+  <h2 class="phone_number">
+505-831-0647
+<br><br>9015 Santa Catalina Ave NW
+  </h2>
+    <button type="button" onclick="disconnected();">Disconnected</button><br>
+    <button type="button" onclick="result = confirm('Are you sure that 505-831-0647
+didn\'t answer?'); if(result){location.href='standard.php?status_id=2&resident_id=1'}">No Answer</button><br>
+    <button type="button" onclick="result = confirm('Are you sure that 505-831-0647
+is a do not call?'); if(result){location.href='standard.php?status_id=3&resident_id=1'}">Do Not Call</button><br>
+    <button type="button" onclick="result = confirm('Are you sure that 505-831-0647
+was contacted?'); if(result){location.href='standard.php?status_id=4&resident_id=1'}">Contacted</button><br>
+    <button type="button" onclick="result = confirm('Are you sure that 505-831-0647
+is a foreign language?'); if(result){location.href='standard.php?status_id=5&resident_id=1'}">Foreign Language</button><br>
+    <a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>
+    </h2>
+</body>
+</html>
