@@ -68,5 +68,8 @@ h2 {
   margin-left: 10px;
   line-height: 14px;
 }
+label {
+  font-weight: bold;
+}
 </style>';
 ?>

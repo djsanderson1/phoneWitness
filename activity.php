@@ -57,11 +57,12 @@ SELECT *
   WHERE territory_queue.territory_id > 0
   AND (last_called_date < date(now()) OR last_called_date IS NULL)
   AND (status_id IN(1,2) OR status_id IS NULL)
+  AND (exported_address = 0 OR exported_address IS NULL)
    ORDER BY territory_queue.order_number, last_called_date, resident_id
    LIMIT 1
     ");
 while ($row = $res->fetch_assoc()) {
-  echo $row["phone_number"] . "<br><br>" . $row["address"];
+  echo "<a href='tel:" . $row["phone_number"] . "'>" . $row["phone_number"] . "</a><br><br>" . $row["address"];
   echo '
   </h2>
   <button type="button" onclick="result = confirm(' . "'Are you sure?'" . '); if(result){location.href=' . "'activity.php?status_id=4&resident_id=" . $row["resident_id"] . "'" . '}">Disconnected</button><br>
