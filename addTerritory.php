@@ -41,16 +41,29 @@
         echo "<br><br>Query is: " . $insertTerritory;
       }
       $getTerritoryID = "SELECT last_insert_id() AS territory_id";
+      $insertTerritoryQueue = "INSERT INTO territory_queue
+                  (territory_id, order_number)
+                  VALUES
+                  ('" . $getTerritoryID . "', (select max(order_number) from territory_queue)+1)
+      ";
+      if($con->query($insertTerritoryQueue)) {
+        echo "Insert of Territory Queue Successful<br>";
+      }
+      else {
+        echo "Insert of Territory Queue Failed-";
+        printf("Error: %s\n", $con->error);
+        echo "<br><br>Query is: " . $insertTerritoryQueue;
+      }
       $res=$con->query($getTerritoryID);
       global $territory_id;
       while ($row = $res->fetch_assoc()) {
         $territory_id = $row["territory_id"];
       }
-      $importResidents = "load data LOCAL infile '/var/www/html/" . $target2_file . "' into table residents
+      $importResidents = "load data LOCAL infile 'C:/wamp64/www/phoneWitness/" . $target2_file . "' into table residents
         FIELDS TERMINATED BY ','
         IGNORE 1 LINES
         (
-          name, address, phone_number
+          name, address, phone_number, do_not_call, day_sleeper
 
           ) SET territory_id = " . $territory_id;
       if($con->query($importResidents)) {
@@ -58,6 +71,24 @@
       }
       else {
         echo "Import of Residents Failed-";
+        printf("Error: %s\n", $con->error);
+        echo "<br><br>";
+      }
+      $updateResidentsFirst = "update residents set status_id2 = 3 where do_not_call = 'y'";
+      if($con->query($updateResidentsFirst)) {
+        echo "Update1 of Residents Successful<br>";
+      }
+      else {
+        echo "Update1 of Residents Failed-";
+        printf("Error: %s\n", $con->error);
+        echo "<br><br>";
+      }
+      $updateResidentsSecond = "update residents set status_id2 = 6 where day_sleeper = 'y'";
+      if($con->query($updateResidentsFirst)) {
+        echo "Update2 of Residents Successful<br>";
+      }
+      else {
+        echo "Update2 of Residents Failed-";
         printf("Error: %s\n", $con->error);
         echo "<br><br>";
       }
@@ -71,7 +102,9 @@
       <input type="file" name="territoryImage" id="territoryImage"><br><br>
       <label for="residentImport"><strong>Resident Import File:</strong><br>
         This file must have the information formatted in a certain way. It will need to be a csv
-        with the following field order and no field headings: Name, Phone, Address, City, State, Zip
+        with the following field order and headings: Name, Address, Phone, Do Not Call,
+        Day Sleeper. The Do Not Call and Day Sleeper must have a single character "y"
+        for yes if they are Do Not Calls or Day Sleepers. If not, simply leave them blank.
       </label><br>
 
       <input type="file" name="residentImport" id="residentImport"><br><br>

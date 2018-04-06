@@ -11,34 +11,44 @@
     Available to export:
       <?php
       include 'mysqlConnect.php';
+      $territory_id = $_GET['territory_id'];
       $res=$con->query("
       SELECT COUNT(*) AS total_addresses
       FROM residents
-      WHERE exported_address IS NULL OR exported_address = 0
-          ");
+      WHERE (exported_address IS NULL OR exported_address = 0)
+      AND status_id2 NOT IN(3,6)
+      AND territory_id = " . $territory_id
+          );
       while ($row = $res->fetch_assoc()) {
         echo $row["total_addresses"];
       }
-      $howMany = $_POST['howMany'];
-      if(!$howMany) {
-        $howMany = 0;
+      if(isset($_POST['howMany'])) {
+
+        $howMany = $_POST['howMany'];
+        if(!$howMany) {
+          $howMany = 0;
+
+        if($howMany > 0) {
+          $res=$con->query("
+          SELECT *
+          FROM residents
+          WHERE exported_address IS NULL OR exported_address = 0
+            AND territory_id = " . $territory_id . "
+            AND status_id2 NOT IN(3,6)
+          LIMIT " . $howMany);
+          while ($row = $res->fetch_assoc()) {
+            echo $row["total_addresses"];
+          }
       }
-      if($howMany > 0) {
-        $res=$con->query("
-        SELECT *
-        FROM residents
-        WHERE exported_address IS NULL OR exported_address = 0
-        LIMIT " . $howMany);
-        while ($row = $res->fetch_assoc()) {
-          echo $row["total_addresses"];
-        }
         $con->query("
           UPDATE residents
           SET exported_address = 1,
           last_called_date = date(now())
           WHERE resident_id = " . $_GET['resident_id']
         );
+        }
       }
+
       ?>
     <form action="export_addresses.php" name="exportForm">
       <label for="howMany">How Many Addresses to Export?:</label>

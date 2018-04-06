@@ -1,48 +1,48 @@
-Resident,Address,Phone
-William Hickman ,9015 Santa Catalina Ave NW,505-831-0647 
-Trang Do ,9023 Santa Catalina Ave NW,505-908-6416 
-Thomas Mirabal ,9101 Santa Catalina Ave NW,505-831-2028 
-Juana Rodriguez ,9115 Santa Catalina Ave NW,505-831-3706 
-Michael Chappelle ,9135 Santa Catalina Ave NW,505-836-1766 
-Carol Shields ,9151 Santa Catalina Ave NW,505-831-0322 
-Carol Shields ,9151 Santa Catalina Ave NW,505-831-0322 
-James Keith ,9144 Santa Catalina Ave NW,703-815-3156 
-Roger Templeton ,9008 Santa Catalina Ave NW,505-352-0749 
-Andrew Montoya ,656 Galleon Dr NW,505-836-3366 
-Michael Baca ,640 Galleon Dr NW,505-836-2112 
-Scott & Rebecca Bogue ,620 Galleon Dr NW,505-836-5400 
-Leon Cougle ,612 Galleon Dr NW,505-315-6578 
-current resident,604 Galleon Dr NW,505-385-7436 
-Ralph Jackson ,9015 Anacapa Ave NW,505-839-0364 
-David Bustamante ,9031 Anacapa Ave NW,505-366-8808 
-Reyna Pallares ,9105 Anacapa Ave NW,505-833-3153 
-Gail K Mathis ,9109 Anacapa Ave NW,505-550-0926 
-Felicia Martinez ,9115 Anacapa Ave NW,505-304-6714 
-Caren D Gutierrez ,9119 Anacapa Ave NW,505-717-1401 
-Cheryl Garcia ,9123 Anacapa Ave NW,505-250-9844 
-John Garcia ,9116 Anacapa Ave NW,505-833-0585 
-Phillip Sinclair ,9004 Anacapa Ave NW,505-243-5787 
-Lauri McAtee ,9000 Anacapa Ave NW,505-831-5662 
-Jacob Sedillo ,609 Stern Dr NW,505-804-6787 
-Robert Wood ,635 Stern Dr NW,505-352-8971 
-Billy De Herrera ,651 Stern Dr NW,505-831-5823
-Dana Smith ,655 Stern Dr NW,505-293-0569 
-Thomas Mouton ,659 Stern Dr NW,505-797-3111 
-Roberto Landaverde ,9008 Twin Harbor Ave NW,505-298-2184 
-Sylvia Maes ,9012 Twin Harbor Ave NW,505-836-2197 
-Silvio Leonti ,9112 Twin Harbor Ave NW,631-957-7965 
-Maria L Amador ,9139 Twin Harbor Ave NW,505-507-8499 
-George Ayze ,9123 Twin Harbor Ave NW,505-352-1806 
-Justina Lowe ,9109 Twin Harbor Ave NW,505-261-0098 
-Sandra Marquez ,9101 Twin Harbor Ave NW,505-247-8428 
-Shannon Almanza ,9031 Twin Harbor Ave NW,505-833-7087 
-Paul Espinosa ,9001 Twin Harbor Ave NW,505-877-2416 
-Zacarias Martinez ,9004 San Nicholas Ave NW,505-884-4335 
-Erick Fernandez ,9008 San Nicholas Ave NW,505-363-6724 
-Tammy Roberts ,9024 San Nicholas Ave NW,505-320-5979 
-Rose Armenta ,9100 San Nicholas Ave NW,505-836-4019 
-Bertha Martinez ,9120 San Nicholas Ave NW,505-839-9145 
-Allen Harding ,9128 San Nicholas Ave NW,Tammy Roberts 
-Julie Atcitty ,9132 San Nicholas Ave NW,505-836-9571 
-Roberto Gonzales ,9027 San Nicholas Ave NW,505-850-5646 
-Norman Miquel ,9023 San Nicholas Ave NW,505-797-7400 
+Resident,Address,Phone,Do Not Call,Day Sleeper
+William Hickman ,9015 Santa Catalina Ave NW,505-831-0647 ,,
+Trang Do ,9023 Santa Catalina Ave NW,505-908-6416 ,,
+Thomas Mirabal ,9101 Santa Catalina Ave NW,505-831-2028 ,y,
+Juana Rodriguez ,9115 Santa Catalina Ave NW,505-831-3706 ,,
+Michael Chappelle ,9135 Santa Catalina Ave NW,505-836-1766 ,,
+Carol Shields ,9151 Santa Catalina Ave NW,505-831-0322 ,,
+Carol Shields ,9151 Santa Catalina Ave NW,505-831-0322 ,,
+James Keith ,9144 Santa Catalina Ave NW,703-815-3156 ,,
+Roger Templeton ,9008 Santa Catalina Ave NW,505-352-0749 ,,
+Andrew Montoya ,656 Galleon Dr NW,505-836-3366 ,,
+Michael Baca ,640 Galleon Dr NW,505-836-2112 ,,
+Scott & Rebecca Bogue ,620 Galleon Dr NW,505-836-5400 ,y,
+Leon Cougle ,612 Galleon Dr NW,505-315-6578 ,,
+current resident,604 Galleon Dr NW,505-385-7436 ,,
+Ralph Jackson ,9015 Anacapa Ave NW,505-839-0364 ,,
+David Bustamante ,9031 Anacapa Ave NW,505-366-8808 ,,
+Reyna Pallares ,9105 Anacapa Ave NW,505-833-3153 ,,
+Gail K Mathis ,9109 Anacapa Ave NW,505-550-0926 ,,
+Felicia Martinez ,9115 Anacapa Ave NW,505-304-6714 ,,
+Caren D Gutierrez ,9119 Anacapa Ave NW,505-717-1401 ,,
+Cheryl Garcia ,9123 Anacapa Ave NW,505-250-9844 ,,
+John Garcia ,9116 Anacapa Ave NW,505-833-0585 ,,
+Phillip Sinclair ,9004 Anacapa Ave NW,505-243-5787 ,,
+Lauri McAtee ,9000 Anacapa Ave NW,505-831-5662 ,,
+Jacob Sedillo ,609 Stern Dr NW,505-804-6787 ,,
+Robert Wood ,635 Stern Dr NW,505-352-8971 ,,
+Billy De Herrera ,651 Stern Dr NW,505-831-5823,,
+Dana Smith ,655 Stern Dr NW,505-293-0569 ,,
+Thomas Mouton ,659 Stern Dr NW,505-797-3111 ,,
+Roberto Landaverde ,9008 Twin Harbor Ave NW,505-298-2184 ,,
+Sylvia Maes ,9012 Twin Harbor Ave NW,505-836-2197 ,,
+Silvio Leonti ,9112 Twin Harbor Ave NW,631-957-7965 ,,
+Maria L Amador ,9139 Twin Harbor Ave NW,505-507-8499 ,,
+George Ayze ,9123 Twin Harbor Ave NW,505-352-1806 ,,
+Justina Lowe ,9109 Twin Harbor Ave NW,505-261-0098 ,,
+Sandra Marquez ,9101 Twin Harbor Ave NW,505-247-8428 ,,
+Shannon Almanza ,9031 Twin Harbor Ave NW,505-833-7087 ,,
+Paul Espinosa ,9001 Twin Harbor Ave NW,505-877-2416 ,,
+Zacarias Martinez ,9004 San Nicholas Ave NW,505-884-4335 ,,
+Erick Fernandez ,9008 San Nicholas Ave NW,505-363-6724 ,y,
+Tammy Roberts ,9024 San Nicholas Ave NW,505-320-5979 ,,
+Rose Armenta ,9100 San Nicholas Ave NW,505-836-4019 ,,
+Bertha Martinez ,9120 San Nicholas Ave NW,505-839-9145 ,,
+Allen Harding ,9128 San Nicholas Ave NW,505-836-7273 ,,
+Julie Atcitty ,9132 San Nicholas Ave NW,505-836-9571 ,,
+Roberto Gonzales ,9027 San Nicholas Ave NW,505-850-5646 ,,
+Norman Miquel ,9023 San Nicholas Ave NW,505-797-7400 ,,
