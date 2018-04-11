@@ -15,8 +15,8 @@
       $res=$con->query("
       SELECT COUNT(*) AS total_addresses
       FROM residents
-      WHERE (exported_address IS NULL OR exported_address = 0)
-      AND status_id2 NOT IN(3,6)
+      WHERE (exported_address IS NULL OR exported_address = 0 OR number_of_tries >= 3)
+      AND status_id2 <> 3
       AND territory_id = " . $territory_id
           );
       while ($row = $res->fetch_assoc()) {
@@ -27,19 +27,29 @@
         $howMany = $_POST['howMany'];
         if(!$howMany) {
           $howMany = 0;
-
+        }
         if($howMany > 0) {
           $res=$con->query("
           SELECT *
           FROM residents
           WHERE exported_address IS NULL OR exported_address = 0
             AND territory_id = " . $territory_id . "
-            AND status_id2 NOT IN(3,6)
+            AND status_id2 <> 3
           LIMIT " . $howMany);
           while ($row = $res->fetch_assoc()) {
+            if($addressList == "") {
+              $addressList =
+            }
+            $addressList = $row["name"],
             echo $row["total_addresses"];
           }
       }
+      $myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+      $txt = "John Doe\n";
+      fwrite($myfile, $txt);
+      $txt = "Jane Doe\n";
+      fwrite($myfile, $txt);
+      fclose($myfile);
         $con->query("
           UPDATE residents
           SET exported_address = 1,
@@ -47,8 +57,6 @@
           WHERE resident_id = " . $_GET['resident_id']
         );
         }
-      }
-
       ?>
     <form action="export_addresses.php" name="exportForm">
       <label for="howMany">How Many Addresses to Export?:</label>
