@@ -65,7 +65,6 @@ SELECT *
   AND (last_called_date < date(now()) OR last_called_date IS NULL)
   AND (status_id IN(1,2) OR status_id IS NULL)
   AND (status_id2 NOT IN(3,6) OR status_id2 IS NULL)
-  AND (exported_address = 0 OR exported_address IS NULL)
   AND (number_of_tries < 3 OR number_of_tries IS NULL)
    ORDER BY territory_queue.order_number, last_called_date, resident_id
    LIMIT 1

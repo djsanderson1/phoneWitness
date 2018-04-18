@@ -28,7 +28,7 @@
   <?php
     include 'mysqlConnect.php';
     $res=$con->query("
-    select count(*) AS ready_to_call from residents where status_id IN(1,2) OR status_id IS NULL
+    select count(*) AS ready_to_call from residents where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
         ");
     while ($row = $res->fetch_assoc()) {
       echo $row["ready_to_call"];

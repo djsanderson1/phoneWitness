@@ -35,12 +35,13 @@
           WHERE exported_address IS NULL OR exported_address = 0
             AND territory_id = " . $territory_id . "
             AND status_id2 <> 3
+            AND number_of_tries >= 3
           LIMIT " . $howMany);
           while ($row = $res->fetch_assoc()) {
             if($addressList == "") {
-              $addressList =
+              $addressList = $row["name"];
             }
-            $addressList = $row["name"],
+            $addressList = $addressList . "\n" . $row["name"];
             echo $row["total_addresses"];
           }
       }
