@@ -11,23 +11,29 @@
     Available to export:
       <?php
       include 'mysqlConnect.php';
+      $qryFilterMostly = "((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
+                    AND (
+                      number_of_tries >= 3
+                      OR phone_number IS NULL
+                      OR phone_number = '')
+                    AND territory_id = ";
       if(isset($_GET['territory_id'])) {
         $territory_id = $_GET['territory_id'];
+        $qryFilter = $qryFilterMostly . $territory_id;
+      //  echo "<br>" . $qryFilter . "<br>";
         $res=$con->query("
         SELECT COUNT(*) AS total_addresses
         FROM residents
-        WHERE (address_export_id IS NULL OR address_export_id = 0)
-        AND number_of_tries >= 3
-        AND (status_id2 <> 3 OR status_id2 IS NULL)
-        AND territory_id = " . $territory_id
+        WHERE" . $qryFilter
             );
         while ($row = $res->fetch_assoc()) {
           echo $row["total_addresses"];
         }
+      //  echo "<br>" . $qryFilter;
       }
-
       if(isset($_POST['howMany'])) {
         $territory_id = $_POST['territory_id'];
+        $qryFilter = $qryFilterMostly . $territory_id;
         $howMany = $_POST['howMany'];
         if(!$howMany) {
           $howMany = 0;
@@ -37,10 +43,7 @@
           $res=$con->query("
           SELECT *
           FROM residents
-          WHERE (address_export_id IS NULL OR address_export_id = 0)
-            AND territory_id = " . $territory_id . "
-            AND (status_id2 <> 3 OR status_id2 IS NULL)
-            AND number_of_tries >= 3
+          WHERE" . $qryFilter . "
           LIMIT " . $howMany);
           while ($row = $res->fetch_assoc()) {
             if($row["status_id2"]==6) {
@@ -61,6 +64,7 @@
       $myfile = fopen("export.csv", "w") or die("Unable to open file!");
       fwrite($myfile, $addressList);
       fclose($myfile);
+      $publisher_id = $_POST['publisher_id'];
         $con->query("
           INSERT INTO
           address_exports
@@ -71,26 +75,39 @@
 
             values (
               now(),
-              '1'
+              $publisher_id
               )
         ");
         $con->query("
           UPDATE residents
           SET address_export_id = last_insert_id(),
           last_called_date = date(now())
-          WHERE (address_export_id IS NULL OR address_export_id = 0)
-            AND territory_id = " . $territory_id . "
-            AND (status_id2 <> 3 OR status_id2 IS NULL)
-            AND number_of_tries >= 3
+          WHERE " . $qryFilter . "
           LIMIT " . $howMany
         );
         header('Location: export.csv');
         }
       ?>
     <form action="export_addresses.php" name="exportForm" method="POST">
-      <label for="howMany">How Many Addresses to Export?:</label>
+
       <input type="hidden" name="territory_id" value="<?php echo $territory_id; ?>">
-      <input type="text" name="howMany"><br>
+      <label for="howMany">How Many Addresses to Export?:</label>
+      <input type="text" name="howMany"><br><br>
+      <label for="howMany">Publisher to check out to:</label>
+      <select name="publisher_id" onchange="if(this.value.substring(0,12)=='addPublisher'){location = this.value}">
+        <option value="0">-- Please select a publisher --</option>
+        <?php
+        include 'mysqlConnect.php';
+        $res=$con->query("SELECT concat(first_name, ' ' ,last_name) AS full_name, publisher_id FROM publishers");
+        while ($row = $res->fetch_assoc()) {
+          $full_name = $row["full_name"];
+          $publisher_id = $row["publisher_id"];
+          echo "<option value='" . $publisher_id . "'>" . $full_name . "</option>";
+        }
+        echo '<option value="addPublisher.php?territory_id=' . $territory_id . '" style="font-weight: bold;">Add a Publisher...</option>';
+        ?>
+
+      </select><br>
       <button type="submit">Export Now!</button>
     </form>
   </body>
