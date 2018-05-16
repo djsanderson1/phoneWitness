@@ -38,15 +38,23 @@
 <button type="button" onclick="playButtonSound();" style="width:auto;"><img src="images/bell.png"></button>
   <h2 class="phone_number">
 <?php
-include 'mysqlConnect.php';
+if(isset($_GET['resident_id'])) {
+  $resident_id = $_GET['resident_id'];
+}
+include 'fxUpdateTerritory.php';
+include 'fxGetResidentDetails.php';
+if(isset($_GET["status_id"]) && isset($resident_id)) {
+  echo 'test';
+  include 'mysqlConnect.php';
+  echo $resident_id;
 
-if(isset($_GET["status_id"]) && isset($_GET["resident_id"])) {
 // uses status_id2 field for do not calls and day sleepers
   if($_GET['status_id']=="3" or $_GET['status_id']=="6") {
     $statusField = "status_id2";
   } else {
     $statusField = "status_id";
   }
+  include 'mysqlConnect.php';
   $con->query("
     UPDATE residents
     SET " . $statusField . " = " . $_GET['status_id'] . ",
@@ -54,8 +62,13 @@ if(isset($_GET["status_id"]) && isset($_GET["resident_id"])) {
     number_of_tries = COALESCE(number_of_tries,0)+1
     WHERE resident_id = " . $_GET['resident_id']
   );
+  $territory_id = getTerritoryFromResident($resident_id);
+  $lastWorkedDate = date("Y-m-d");
+
+  updateTerritoryLastWorkedDate($territory_id, $lastWorkedDate);
   header('Location: betweenCalls.php');
 }
+include 'mysqlConnect.php';
 $res=$con->query("
 SELECT *
   FROM territory_queue
