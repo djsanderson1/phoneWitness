@@ -38,7 +38,15 @@
 <button type="button" onclick="playButtonSound();" style="width:auto;"><img src="images/bell.png"></button>
   <h2 class="phone_number">
 <?php
-include 'mysqlConnect.php';
+if(isset($_GET['resident_id'])) {
+  $resident_id = $_GET['resident_id'];
+}
+require_once('fxUpdateTerritory.php');
+require_once('fxGetResidentDetails.php');
+if(isset($_GET["status_id"]) && isset($resident_id)) {
+  echo 'test';
+  include 'mysqlConnect.php';
+  echo $resident_id;
 
 if(isset($_GET["status_id"]) && isset($_GET["resident_id"])) {
 // uses status_id2 field for do not calls and day sleepers
