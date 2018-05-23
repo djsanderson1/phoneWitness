@@ -68,9 +68,6 @@
           ) SET territory_id = " . $territory_id;
       if($con->query($importResidents)) {
         echo "Import of Residents Successful<br>";
-        require_once('fxUpdateTerritory.php');
-        $importDate = date("Y-m-d");
-        updateTerritoryImportDate($territory_id, $importDate);
       }
       else {
         echo "Import of Residents Failed-";
