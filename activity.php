@@ -41,8 +41,8 @@
 if(isset($_GET['resident_id'])) {
   $resident_id = $_GET['resident_id'];
 }
-include 'fxUpdateTerritory.php';
-include 'fxGetResidentDetails.php';
+require_once('fxUpdateTerritory.php');
+require_once('fxGetResidentDetails.php');
 if(isset($_GET["status_id"]) && isset($resident_id)) {
   echo 'test';
   include 'mysqlConnect.php';

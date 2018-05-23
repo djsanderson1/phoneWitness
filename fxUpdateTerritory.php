@@ -21,6 +21,7 @@ updateTerritoryImportDate($)
 ---------------------------------------------------------------------------------------
 
 */
+require_once('mysqlConnect.php');
     function updateTerritoryLastWorkedDate($territory_id=0, $lastWorkedDate='') {
       if($lastWorkedDate != '' AND $territory_id != 0) {
         $sql = "
@@ -30,9 +31,13 @@ updateTerritoryImportDate($)
         noResponseSQL($sql);
       }
     }
-    /*
-    function updateTerritoryImportDate($territory_id = 0, $importDate) {
-
+    function updateTerritoryImportDate($territory_id = 0, $importDate='') {
+      if($importDate != '' AND $territory_id != 0) {
+        $sql = "
+          UPDATE territories
+             SET last_import_date = '" . $importDate . "'
+           WHERE territory_id = " . $territory_id;
+        noResponseSQL($sql);
+      }
     }
-    */
     ?>

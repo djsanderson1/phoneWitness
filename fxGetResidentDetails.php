@@ -1,7 +1,7 @@
 <?php
-echo 'test';
-getTerritoryFromResident($resident_id) {
-
+require_once('mysqlConnect.php');
+function getTerritoryFromResident($resident_id) {
+global $con;
   $sql = "
     SELECT territory_id
     FROM residents INNER JOIN territories USING(territory_id)

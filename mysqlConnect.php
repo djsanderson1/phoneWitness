@@ -8,7 +8,8 @@ if (mysqli_connect_errno())
   else {
     if(!function_exists('noResponseSQL')) {
       function noResponseSQL($sql,$successMsg='',$failMsg='') {
-        if($con->query($importResidents)) {
+        global $con;
+        if($con->query($sql)) {
           echo $successMsg;
         }
         else {
