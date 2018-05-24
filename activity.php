@@ -29,7 +29,8 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
-}
+    }
+
   </style>
   <title>Phone Calls View</title>
   <?php include 'style.php'; ?>
@@ -97,5 +98,6 @@ while ($row = $res->fetch_assoc()) {
 }
 ?>
   </h2>
+  <br><br><a href="logout.php" class="navbar">Logout</a>
 </body>
 </html>

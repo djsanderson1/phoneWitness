@@ -34,7 +34,8 @@
     }
   ?>
   <h1><a href="activity.php">Next >> </a></h1>
-
+<br><br><br><br>
+<a href="logout.php" class="navbar">Logout</a>
   <!--
   Estimated time to complete: hrs mins<br> -->
 </body>
