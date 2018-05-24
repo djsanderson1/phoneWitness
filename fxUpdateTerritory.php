@@ -1,19 +1,24 @@
     <?php
 /* fxUpdateTerritory.php
-Created: 5/13/2018 by DJ Sanderson
+
+Purpose:
+---------------------------------------------------------------------------------------
 Purpose of this file is to hold the variety of functions needed to modify a territory.
+---------------------------------------------------------------------------------------
+
+Details:
+---------------------------------------------------------------------------------------
 This has everything except for the functions to create the territory which is in
-the fxCreateTerritory.php file. Below is a listing of all functions and what they do:
+the fxCreateTerritory.php file.
+---------------------------------------------------------------------------------------
 
-importResidents($territory_number) - Runs the actual import of residents. This requires that you have
-  a list of residents passed by a form.
+Functions List:
+---------------------------------------------------------------------------------------
+updateTerritoryLastWorkedDate($territory_id, $lastWorkedDate) - This will update the last
+  worked date for this territory.
 
-frmUploadResidents() - This is the form for uploading residents.
-
-inpUploadResidents() - This is the form field element for uploading residents list.
-
-updateTerritoryImage() - This is the code that actually deals with the image file(s) for a
-  territory.
+updateTerritoryImportDate($)
+---------------------------------------------------------------------------------------
 
 */
 require_once('mysqlConnect.php');

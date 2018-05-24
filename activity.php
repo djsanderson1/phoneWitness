@@ -48,13 +48,13 @@ if(isset($_GET["status_id"]) && isset($resident_id)) {
   include 'mysqlConnect.php';
   echo $resident_id;
 
-if(isset($_GET["status_id"]) && isset($_GET["resident_id"])) {
 // uses status_id2 field for do not calls and day sleepers
   if($_GET['status_id']=="3" or $_GET['status_id']=="6") {
     $statusField = "status_id2";
   } else {
     $statusField = "status_id";
   }
+  include 'mysqlConnect.php';
   $con->query("
     UPDATE residents
     SET " . $statusField . " = " . $_GET['status_id'] . ",
@@ -62,8 +62,13 @@ if(isset($_GET["status_id"]) && isset($_GET["resident_id"])) {
     number_of_tries = COALESCE(number_of_tries,0)+1
     WHERE resident_id = " . $_GET['resident_id']
   );
+  $territory_id = getTerritoryFromResident($resident_id);
+  $lastWorkedDate = date("Y-m-d");
+
+  updateTerritoryLastWorkedDate($territory_id, $lastWorkedDate);
   header('Location: betweenCalls.php');
 }
+include 'mysqlConnect.php';
 $res=$con->query("
 SELECT *
   FROM territory_queue
