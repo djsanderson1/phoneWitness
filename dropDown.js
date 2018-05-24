@@ -1,5 +1,34 @@
-function dropDown(id) {
+function territoryActionList(id,territory_number) {
   var selectBox = document.getElementById(id);
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    alert(selectedValue);
+  var territory_id = id.substr(12);
+  var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  if(confirm(selectedValue)) {
+    switch(selectedValue) {
+      case "delete":
+        var msg = "Are you sure you want to delete territory number " + territory_number + "?";
+        var url = "deleteTerritory.php?territory_id=" + territory_id;
+        confirmedRedirect(url,msg);
+        break;
+      case "export":
+        var msg = "Are you sure you want to export territory number " + territory_number + "?";
+        var url = "deleteTerritory.php?territory_id=" + territory_id;
+        confirmedRedirect(url,msg);
+        break;
+      case "refresh":
+        var msg = "Are you sure you want to refresh territory number " + territory_number + "?";
+        var url = "deleteTerritory.php?territory_id=" + territory_id;
+        confirmedRedirect(url,msg);
+        break;
+      case "viewExport":
+        var msg = "Are you sure you want to view exported addresses for territory number " + territory_number + "?";
+        var url = "viewExportedAddresses.php?territory_id=" + territory_id;
+        confirmedRedirect(url,msg);
+        break;
+    }
+  }
+}
+function confirmedRedirect(url,msg) {
+  if(confirm(msg)) {
+    location.href=url;
+  }
 }

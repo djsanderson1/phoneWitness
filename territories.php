@@ -48,7 +48,15 @@
         <td>' . $row["last_import_date"] . '</td>
         <td>' . $row["last_worked_date"] . '</td>
         <td><a href="' . $row["territoryImageUrl"] . '"><img src="' . $row["territoryImageUrl"] . '" height="50"></a></td>
-        <td><a onclick="result = confirm(' . "'Are you sure that you want to delete territory number: " . $row["territory_number"] . "?'" . '); if(result){location.href=' . "'deleteTerritory.php?territory_id=" . $row["territory_id"] . "'" . '}">Del</a> |
+        <td>
+        <select name="actionList" onChange="territoryActionList(this.id,' . $row["territory_number"] . ')" id="territory_id' . $row["territory_id"] . '">
+          <option>-- Please Select an Action --</option>
+          <option value="delete">Delete Territory</option>
+          <option value="export">Export Addresses</option>
+          <option value="refresh">Refresh Territory</option>
+          <option value="viewExport">View Exported Addresses</option>
+        </select><br>
+        <a onclick="result = confirm(' . "'Are you sure that you want to delete territory number: " . $row["territory_number"] . "?'" . '); if(result){location.href=' . "'deleteTerritory.php?territory_id=" . $row["territory_id"] . "'" . '}">Del</a> |
             <a href="export_addresses.php?territory_id=' . $row["territory_id"] . '">Export</a> |
             <a onclick="result = confirm(' . "'Are you sure that you want to refresh territory number: " . $row["territory_number"] . "?'" . '); if(result){location.href=' . "'refreshTerritory.php?territory_id=" . $row["territory_id"] . "'" . '}" title="This refreshes the territory, marking all residents as not worked.">Refresh</a>
         </td>
