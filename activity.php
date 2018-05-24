@@ -45,10 +45,6 @@ if(isset($_GET['resident_id'])) {
 require_once('fxUpdateTerritory.php');
 require_once('fxGetResidentDetails.php');
 if(isset($_GET["status_id"]) && isset($resident_id)) {
-  echo 'test';
-  include 'mysqlConnect.php';
-  echo $resident_id;
-
 // uses status_id2 field for do not calls and day sleepers
   if($_GET['status_id']=="3" or $_GET['status_id']=="6") {
     $statusField = "status_id2";
@@ -85,6 +81,7 @@ SELECT *
     ");
 while ($row = $res->fetch_assoc()) {
   echo "<a href='tel:" . $row["phone_number"] . "'>" . $row["phone_number"] . "</a><br><br>" . $row["address"];
+  /* commented out for campaign mode
   echo '
   </h2>
   <button type="button" onclick="result = confirm(' . "'Was this number disconnected?'" . '); if(result){location.href=' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . '}">Disconnected</button><br>
@@ -95,9 +92,14 @@ while ($row = $res->fetch_assoc()) {
   <button type="button" onclick="result = confirm(' . "'Does this person sleep during the day?'" . '); if(result){location.href=' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . '}">Day Sleeper</button><br>
 <a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>
   ';
+  */
+  echo '</h2>
+  <button type="button" onclick="result = confirm(' . "'Did you contact someone for the Invitation?'" . '); if(result){location.href=' . "'activity.php?status_id=7&resident_id=" . $row["resident_id"] . "'" . '}">Contacted for Invitation</button><br>
+  <button type="button" onclick="result = confirm(' . "'Mismatched Address / Phone?'" . '); if(result){location.href=' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . '}">Mismatched Address / Phone</button>
+  ';
 }
 ?>
   </h2>
-  <br><br><a href="logout.php" class="navbar">Logout</a>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><a href="logout.php" class="navbar">Logout</a>
 </body>
 </html>
