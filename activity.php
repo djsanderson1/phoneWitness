@@ -80,20 +80,27 @@ SELECT *
    LIMIT 1
     ");
 while ($row = $res->fetch_assoc()) {
+  // Line below displays resident's name for campaign mode
+  echo $row["name"] . '<br><br>';
   echo "<a href='tel:" . $row["phone_number"] . "'>" . $row["phone_number"] . "</a><br><br>" . $row["address"];
+  echo '</h2>';
   /* commented out for campaign mode
   echo '
   </h2>
   <button type="button" onclick="result = confirm(' . "'Was this number disconnected?'" . '); if(result){location.href=' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . '}">Disconnected</button><br>
   <button type="button" onclick="result = confirm(' . "'Did nobody answer?'" . '); if(result){location.href=' . "'activity.php?status_id=2&resident_id=" . $row["resident_id"] . "'" . '}">No Answer</button><br>
+  */
+  echo '
   <button type="button" onclick="result = confirm(' . "'Is this a do not call?'" . '); if(result){location.href=' . "'activity.php?status_id=3&resident_id=" . $row["resident_id"] . "'" . '}">Do Not Call</button><br>
+  ';
+  /* commented out for campaign mode
   <button type="button" onclick="result = confirm(' . "'Did you contact someone?'" . '); if(result){location.href=' . "'activity.php?status_id=4&resident_id=" . $row["resident_id"] . "'" . '}">Contacted</button><br>
   <button type="button" onclick="result = confirm(' . "'Did you find interest with a person who speaks a foreign language?'" . '); if(result){location.href=' . "'activity.php?status_id=5&resident_id=" . $row["resident_id"] . "'" . '}">Foreign Language</button><br>
   <button type="button" onclick="result = confirm(' . "'Does this person sleep during the day?'" . '); if(result){location.href=' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . '}">Day Sleeper</button><br>
 <a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>
   ';
   */
-  echo '</h2>
+  echo '
   <button type="button" onclick="result = confirm(' . "'Did you contact someone for the Invitation?'" . '); if(result){location.href=' . "'activity.php?status_id=7&resident_id=" . $row["resident_id"] . "'" . '}">Contacted for Invitation</button><br>
   <button type="button" onclick="result = confirm(' . "'Mismatched Address / Phone?'" . '); if(result){location.href=' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . '}">Mismatched Address / Phone</button>
   ';
