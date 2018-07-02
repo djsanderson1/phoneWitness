@@ -1,5 +1,6 @@
 # This ignore file is ignoring csv and jpg because they are territory uploads.
 # As long as you use something other than jpg for system images this should work.
 # It is recommended to use *.png for system images.
-*.csv
-*.jpg
+**.csv
+**.jpg
+**.mp4

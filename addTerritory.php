@@ -3,6 +3,13 @@
   <head>
     <title>Add Territory</title>
     <?php include 'style.php'; ?>
+    <style>
+    p {
+      font-weight: normal;
+      font-size: 12pt;
+      width: 50%;
+    }
+    </style>
   </head>
   <body>
     <?php include 'navbar.php';
@@ -11,9 +18,9 @@
     }
     if(!empty($territory_number)) {
       $imgTarget_dir = "images/";
-      $target_file = $imgTarget_dir . basename($_FILES["territoryImage"]["name"]);
+      $target_file = $imgTarget_dir . "territoryFront-" . $territory_number . "." . substr(basename($_FILES["territoryImage"]["name"]),-3);
       if(move_uploaded_file($_FILES["territoryImage"]["tmp_name"], $target_file)) {
-        echo "territory image moved to " . $target_file;
+        echo "territory image moved to " . $target_file . "<br>";
       }
       else {
         echo "move failed for " . $target_file . "<br>";
@@ -21,7 +28,7 @@
       $importTarget_dir = "territories/";
       $target2_file = $importTarget_dir . basename($_FILES['residentImport']['name']);
       if(move_uploaded_file($_FILES['residentImport']['tmp_name'], $target2_file)) {
-        echo "territory import moved to " . $target2_file;
+        echo "territory import moved to " . $target2_file . "<br>";
       }
       else {
         echo "move failed for " . $target2_file . "<br>";
@@ -40,11 +47,23 @@
         printf("Error: %s\n", $con->error);
         echo "<br><br>Query is: " . $insertTerritory;
       }
-      $getTerritoryID = "SELECT last_insert_id() AS territory_id";
+      $res=$con->query("
+      SELECT last_insert_id() AS territory_id
+          ");
+      while ($row = $res->fetch_assoc()) {
+        global $territory_id;
+        $territory_id = $row['territory_id'];
+      }
+      $res=$con->query("
+      select max(order_number) AS maxOrderNumber from territory_queue
+          ");
+      while ($row = $res->fetch_assoc()) {
+        $nextQueueNumber = $row['maxOrderNumber']+1;
+      }
       $insertTerritoryQueue = "INSERT INTO territory_queue
                   (territory_id, order_number)
                   VALUES
-                  ('" . $getTerritoryID . "', (select max(order_number) from territory_queue)+1)
+                  ('" . $territory_id . "', $nextQueueNumber)
       ";
       if($con->query($insertTerritoryQueue)) {
         echo "Insert of Territory Queue Successful<br>";
@@ -53,11 +72,6 @@
         echo "Insert of Territory Queue Failed-";
         printf("Error: %s\n", $con->error);
         echo "<br><br>Query is: " . $insertTerritoryQueue;
-      }
-      $res=$con->query($getTerritoryID);
-      global $territory_id;
-      while ($row = $res->fetch_assoc()) {
-        $territory_id = $row["territory_id"];
       }
       $importResidents = "load data LOCAL infile 'C:/wamp64/www/phoneWitness/" . $target2_file . "' into table residents
         FIELDS TERMINATED BY ','
@@ -104,10 +118,10 @@
       <label for="territoryImage"><strong>Picture of Territory:</strong></label><br>
       <input type="file" name="territoryImage" id="territoryImage"><br><br>
       <label for="residentImport"><strong>Resident Import File:</strong><br>
-        This file must have the information formatted in a certain way. It will need to be a csv
+        <p>This file must have the information formatted in a certain way. It will need to be a csv
         with the following field order and headings: Name, Address, Phone, Do Not Call,
         Day Sleeper. The Do Not Call and Day Sleeper must have a single character "y"
-        for yes if they are Do Not Calls or Day Sleepers. If not, simply leave them blank.
+        for yes if they are Do Not Calls or Day Sleepers. If not, simply leave the field for day sleepers blank.</p>
       </label><br>
 
       <input type="file" name="residentImport" id="residentImport"><br><br>
