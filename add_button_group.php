@@ -3,45 +3,39 @@
   <head>
     <title>Settings</title>
     <?php include 'style.php'; ?>
-    <style>
-      div#orderHelp {
-        display: none;
-        background-color: gray;
-      }
-      .helpQuestion {
-        font-weight: bold;
-        font-size: 150%;
-        cursor: pointer;
-      }
-    </style>
+
   </head>
   <body onload="frmButtonGroup.button_group_name.focus();">
-    <div id="orderHelp">The order is what is used to determine which group will displayed first.
-      It uses this to sort so you can put spaces between the numbers. This means if you put the
-      first item as "10" and the next as "20" and you then realize you want to add something between
-      these you can just put something as 15 so that you don't have to go back and change the order
-      on all the existing items.
-    </div>
+
     <?php include 'navbar.php'; ?>
     <h1>Add Button Group</h1>
-    <form action="insert_button_group.php" name="frmButtonGroup">
+    <form action="insert_button_group.php" name="frmButtonGroup" method="post">
       <label for="button_group_name">Button Group Name:</label><br>
       <input type="text" name="button_group_name"><br><br>
 
-      <label for="button_group_order">Button Group Order:</label><span class="helpQuestion" onmouseover="document.getElementById('orderHelp').style.display='block'">?</span><br>
-      <input type="text" name="button_group_order"><br><br>
+      <label for="button_group_order">First Button Group?:</label>
+      <input type="checkbox" name="button_group_order" value="1"><br><br>
+
+      <label for="next_button_group_id">Next Button Group?:</label><br>
+      <select name="next_button_group_id">
+        <option value="0">-- Select Next Button Group --</option>
+      <?php
+      require_once 'mysqlConnect.php';
+      $res=$con->query("
+      SELECT * FROM button_groups
+          ");
+      while ($row = $res->fetch_assoc()) {
+      echo '<option value="' . $row["button_group_id"] . '">' . $row["button_group_name"] . '</option>';
+    }
+    ?>
+      </select><br><br>
+      <label for="next_button_group_id">Url to Execute:</label><br>
+      <input type="text" name="action_url"><br>This will forward to the above URL instead of displaying a button group. Only the last button group can have this filled in.<br><br>
       <button name="addButton" type="submit">Add Button Group</button>
       <button onclick="goBack()">Cancel</button>
     </form>
 
 
-<script>
-function goBack() {
-    window.history.back();
-}
-function showHelp(helpName) {
-  document.getElementById(helpName).style.display="block";
-}
-</script>
+
   </body>
 </html>
