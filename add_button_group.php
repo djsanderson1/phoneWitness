@@ -3,7 +3,7 @@
   <head>
     <title>Settings</title>
     <?php include 'style.php'; ?>
-
+    <script src="frmHelper.js"></script>
   </head>
   <body onload="frmButtonGroup.button_group_name.focus();">
 
@@ -32,7 +32,7 @@
       <label for="next_button_group_id">Url to Execute:</label><br>
       <input type="text" name="action_url"><br>This will forward to the above URL instead of displaying a button group. Only the last button group can have this filled in.<br><br>
       <button name="addButton" type="submit">Add Button Group</button>
-      <button onclick="goBack()">Cancel</button>
+      <button onclick="goBack()" type="button">Cancel</button>
     </form>
 
 

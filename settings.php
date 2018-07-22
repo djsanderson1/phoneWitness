@@ -44,7 +44,7 @@
               <td>' . $buttons . '</td>
               <td>
                 <a href="add_button.php?button_group_id=' . $row['button_group_id'] . '">Add Button</a><br>
-                <a href="delete_button_group.php?button_group_id=' . $row['button_group_id'] . '">Delete Group</a>
+                <a href="delete_button_group.php?button_group_id=' . $row['button_group_id'] . '" onclick="return confirm(\'Are you sure you want to delete this button group?\');">Delete Group</a>
               </td>
             </tr>
           ';

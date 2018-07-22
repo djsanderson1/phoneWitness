@@ -21,10 +21,14 @@ $sql = "
         "'" . $button_group_name . "'" . "," .
         "'" . $next_button_group_id . "'" . "," .
         "'" . $button_group_order . "'" . "," .
-        "'" . $action_url . "'" . 
+        "'" . $action_url . "'" .
       ")";
+/* Commented out this section if I'm not testing. When testing this will display
+    the sql code on the screen so it's easy to view.
 echo $sql . '<br>';
+*/
 noResponseSQL($sql);
 $newURL = 'settings.php';
-// header('Location: '.$newURL);
+// When testing, comment out the line below so it doesn't redirect
+header('Location: '.$newURL);
 ?>
