@@ -27,7 +27,12 @@
   Phone numbers ready to call:
   <?php
     $res=$con->query("
-    select count(*) AS ready_to_call from residents where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
+    select count(*) AS ready_to_call from residents
+    left join territory_queue using(territory_id)
+    where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
+    AND territory_queue.order_number > 0
+    AND number_of_tries < 3
+    AND status_id2 NOT IN(3,6)
         ");
     while ($row = $res->fetch_assoc()) {
       echo $row["ready_to_call"];
