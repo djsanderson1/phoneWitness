@@ -27,7 +27,9 @@
     <h1>Button Details</h1>
 
     <hr />
-
+    <?php
+      echo '<a href="delete_button.php?button_id=' . $_GET['button_id'] . '" onclick="return confirm(\'Are you sure you want to delete this button group?\');">Delete This Button</a>';
+    ?>
 <table>
         <?php
         require_once('displayHelper.php');
