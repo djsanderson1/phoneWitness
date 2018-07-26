@@ -20,18 +20,18 @@ $sql = "
         )
 
       VALUES (" .
-        "'" . $button_name . "'" . "," .
-        "'" . $confirm_message . "'" . "," .
+        "'" . htmlspecialchars($button_name, ENT_QUOTES) . "'" . "," .
+        "'" . htmlspecialchars($confirm_message, ENT_QUOTES) . "'" . "," .
         "'" . $button_order . "'" . "," .
-        "'" . $html_instead . "'" . "," .
+        "'" . htmlspecialchars($html_instead, ENT_QUOTES) . "'" . "," .
         "'" . $button_group_id . "'" .
       ")";
 /* Commented out this section if I'm not testing. When testing this will display
-    the sql code on the screen so it's easy to view. */
+    the sql code on the screen so it's easy to view.
 echo $sql . '<br>';
-
+*/
 noResponseSQL($sql);
 $newURL = 'settings.php';
 // When testing, comment out the line below so it doesn't redirect
-//header('Location: '.$newURL);
+header('Location: '.$newURL);
 ?>
