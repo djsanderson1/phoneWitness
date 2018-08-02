@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Button Details</title>
+    <title>Edit Button</title>
     <?php include 'style.php'; ?>
     <style>
     td:nth-child(1) {
@@ -22,16 +22,14 @@
     }
     </style>
   </head>
-  <body>
+  <body onload="frmButton.button_display.focus();">
     <?php include 'navbar.php'; ?>
-    <h1>Button Details</h1>
+    <h1>Edit Button</h1>
 
     <hr />
-    <?php
-      echo '<a href="delete_button.php?button_id=' . $_GET['button_id'] . '" onclick="return confirm(\'Are you sure you want to delete this button?\');">Delete</a> |
-      <a href="edit_button.php?button_id=' . $_GET['button_id'] . '">Edit</a>';
-    ?>
-<table>
+    <form action="update_button.php" name="frmButton" method="post">
+    <table>
+
         <?php
         require_once('displayHelper.php');
         if(is_numeric($_GET['button_id'])) {
@@ -54,37 +52,41 @@
           $qry_confirm_message = $row['confirm_message'];
           $qry_button_group_name = $row['button_group_name'];
           $qry_html_instead = $row['html_instead'];
+
           echo '<tr>
             <td>Button ID:</td>
             <td>' . $qry_button_id . '</td>
+            <input type="hidden" name="button_id" value="' . $qry_button_id . '">
           </tr>
           <tr>
-            <td>Button Display:</td>
-            <td>' . $qry_button_display . '</td>
+            <td><label for="button_display">Button Display:</label></td>
+            <td><input type="text" name="button_display" value="' . $qry_button_display . '"></td>
           </tr>
           <tr>
-            <td>Button Order:</td>
-            <td>' . $qry_button_order . '</td>
+            <td><label for="button_order">Button Order:</label></td>
+            <td><input type="number" name="button_order" value="' . $qry_button_order . '"></td>
           </tr>
           <tr>
-            <td>Confirmation Message:</td>
-            <td>' . $qry_confirm_message . '</td>
+            <td><label for="confirm_message">Confirmation Message:</label></td>
+            <td><input type="text" name="confirm_message" value="' . $qry_confirm_message . '"></td>
           </tr>
           <tr>
             <td>Button Group</td>
             <td>' . $qry_button_group_name . '</td>
           </tr>
           <tr>
-            <td>HTML Instead</td>
-            <td><strong>HTML Preview:</strong><br>
-              ' . html2specialchars($qry_html_instead) . '
-              <br><br><strong>Actual HTML Code</strong><br>
-              <code>' . $qry_html_instead . '</code>
+            <td><label for="html_instead">HTML Instead:</label></td>
+            <td>
+            <textarea name="html_instead">' . $qry_html_instead . '</textarea>
             </td>
+          </tr>
+          <tr>
+            <td></td><td><button type="submit">Save Changes</button></td>
           </tr>';
         }
         ?>
 </table>
+</form>
       </table>
       <hr />
   </body>
