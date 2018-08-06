@@ -22,6 +22,21 @@
       <label for="confirm_message">Confirmation Message:</label><br>
       <input type="text" name="confirm_message" size="50"><br><br>
 
+      <label for="confirm_message">Status (Sets the status of the resident. Leave blank unless this is the final outcome):</label><br>
+      <select name="status_id">
+        <option value="0">&nbsp;</option>
+        <?php
+          require_once("mysqlConnect.php");
+          $res=$con->query("
+            SELECT * FROM status_list
+              ");
+          while ($row = $res->fetch_assoc()) {
+            echo '<option value="' . $row["status_id"] . '">' . $row["status_name"] . '</option>';
+          }
+        ?>
+      </select>
+        <br><br>
+
       <label for="html_instead">HTML Instead (This will use HTML instead of a button):</label><br>
       <textarea name="html_instead" cols="100" rows="8"></textarea><br><br>
 

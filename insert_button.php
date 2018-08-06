@@ -8,7 +8,8 @@ $button_name = $_POST["button_name"];
 $html_instead = $_POST["html_instead"];
 $confirm_message = $_POST["confirm_message"];
 $button_group_id = $_POST["button_group_id"];
-require_once 'mysqlConnect.php';
+$status_id = $_POST["status_id"];
+require_once('mysqlConnect.php');
 $sql = "
       INSERT INTO buttons
       (
@@ -16,7 +17,8 @@ $sql = "
         confirm_message,
         button_order,
         html_instead,
-        button_group_id
+        button_group_id,
+        status_id
         )
 
       VALUES (" .
@@ -24,7 +26,8 @@ $sql = "
         "'" . htmlspecialchars($confirm_message, ENT_QUOTES) . "'" . "," .
         "'" . $button_order . "'" . "," .
         "'" . htmlspecialchars($html_instead, ENT_QUOTES) . "'" . "," .
-        "'" . $button_group_id . "'" .
+        "'" . $button_group_id . "'" . "," .
+        "'" . $status_id . "'" .
       ")";
 /* Commented out this section if I'm not testing. When testing this will display
     the sql code on the screen so it's easy to view.

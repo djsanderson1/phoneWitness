@@ -89,8 +89,8 @@ while ($row = $res->fetch_assoc()) {
   echo '
   </h2>';
   include 'mysqlConnect.php';
-  if(isset($_POST('button_group_id'))) {
-    $button_group_id = $_POST('button_group_id');
+  if(isset($_GET('button_group_id'))) {
+    $button_group_id = $_GET('button_group_id');
   }
   else {
     $button_group_id = "";
@@ -98,7 +98,7 @@ while ($row = $res->fetch_assoc()) {
   $res2=$con->query(" select * FROM buttons LEFT JOIN button_groups USING(button_group_id) where if(" . $button_group_id . ">0," . button_groups.button_group_id = $button_group_id . ", button_group_order = 1 )");
   while ($row2 = $res2->fetch_assoc()) {
   echo '
-  <button type="button" onclick="result = confirm(' . "' . .'" . '); if(result){location.href=' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . '}">Disconnected</button><br>
+  <button type="button" onclick="result = confirm(' . "'" . $row2["button_display"] . "'" . '); if(result){location.href=' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . '}">Disconnected</button><br>
   <button type="button" onclick="result = confirm(' . "'Did nobody answer?'" . '); if(result){location.href=' . "'activity.php?status_id=2&resident_id=" . $row["resident_id"] . "'" . '}">No Answer</button><br>
   <button type="button" onclick="result = confirm(' . "'Is this a do not call?'" . '); if(result){location.href=' . "'activity.php?status_id=3&resident_id=" . $row["resident_id"] . "'" . '}">Do Not Call</button><br>
   <button type="button" onclick="result = confirm(' . "'Did you contact someone?'" . '); if(result){location.href=' . "'activity.php?status_id=4&resident_id=" . $row["resident_id"] . "'" . '}">Contacted</button><br>
@@ -112,6 +112,7 @@ while ($row = $res->fetch_assoc()) {
   echo '
   <button type="button" onclick="result = confirm(' . "'Mismatched Address / Phone?'" . '); if(result){location.href=' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . '}">Mismatched Address / Phone</button>
   ';
+  }
 }
 ?>
   </h2>
