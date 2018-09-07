@@ -18,6 +18,7 @@
       left join territory_queue using(territory_id)
       left join territories ON territories.territory_id = territory_queue.territory_id
       WHERE residents.status_id IS NULL
+      AND residents.address_export_id IS NULL
     )
         ");
     while ($row = $res->fetch_assoc()) {
@@ -27,7 +28,12 @@
   Phone numbers ready to call:
   <?php
     $res=$con->query("
-    select count(*) AS ready_to_call from residents where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
+    select count(*) AS ready_to_call from residents
+    left join territory_queue using(territory_id)
+    where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
+    AND territory_queue.order_number > 0
+    AND (number_of_tries < 3 OR number_of_tries IS NULL)
+    AND status_id2 IS NULL
         ");
     while ($row = $res->fetch_assoc()) {
       echo $row["ready_to_call"];
