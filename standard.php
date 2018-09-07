@@ -18,6 +18,7 @@
       left join territory_queue using(territory_id)
       left join territories ON territories.territory_id = territory_queue.territory_id
       WHERE residents.status_id IS NULL
+      AND residents.address_export_id IS NULL
     )
         ");
     while ($row = $res->fetch_assoc()) {
