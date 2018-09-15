@@ -101,7 +101,7 @@
         echo "<br><br>";
       }
       $updateResidentsSecond = "update residents set status_id2 = 6 where day_sleeper = 'y'";
-      if($con->query($updateResidentsFirst)) {
+      if($con->query($updateResidentsSecond)) {
         echo "Update2 of Residents Successful<br>";
       }
       else {
