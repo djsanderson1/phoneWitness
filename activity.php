@@ -3,7 +3,7 @@
 <head>
   <script type = "text/javascript" >
    function preventBack(){window.history.forward();}
-    setTimeout("preventBack()", 0);
+    setTimeout("preventBack()", 10);
     window.onunload=function(){null};
     function playNotificationSound() {
       var notification = new Audio('audio/notification.mp3');
