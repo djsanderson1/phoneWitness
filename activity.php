@@ -2,9 +2,6 @@
 <html>
 <head>
   <script type = "text/javascript" >
-   function preventBack(){window.history.forward();}
-    setTimeout("preventBack()", 10);
-    window.onunload=function(){null};
     function playNotificationSound() {
       var notification = new Audio('audio/notification.mp3');
       notification.play();
@@ -34,6 +31,7 @@
   </style>
   <title>Phone Calls View</title>
   <?php include 'style.php'; ?>
+  <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body onload="playNotificationSound();">
 <button type="button" onclick="playButtonSound();" style="width:auto;"><img src="images/bell.png"></button>
@@ -63,7 +61,7 @@ if(isset($_GET["status_id"]) && isset($resident_id)) {
   $lastWorkedDate = date("Y-m-d");
 
   updateTerritoryLastWorkedDate($territory_id, $lastWorkedDate);
-  header('Location: betweenCalls.php');
+  header('Location: betweenCalls.php?from=activityPage');
 }
 include 'mysqlConnect.php';
 $res=$con->query("
@@ -89,12 +87,12 @@ while ($row = $res->fetch_assoc()) {
   /* commented out for campaign mode */
   echo '
   </h2>
-  <button type="button" onclick="result = confirm(' . "'Was this number disconnected?'" . '); if(result){location.href=' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . '}">Disconnected</button><br>
-  <button type="button" onclick="result = confirm(' . "'Did nobody answer?'" . '); if(result){location.href=' . "'activity.php?status_id=2&resident_id=" . $row["resident_id"] . "'" . '}">No Answer</button><br>
-  <button type="button" onclick="result = confirm(' . "'Is this a do not call?'" . '); if(result){location.href=' . "'activity.php?status_id=3&resident_id=" . $row["resident_id"] . "'" . '}">Do Not Call</button><br>
-  <button type="button" onclick="result = confirm(' . "'Did you contact someone?'" . '); if(result){location.href=' . "'activity.php?status_id=4&resident_id=" . $row["resident_id"] . "'" . '}">Contacted</button><br>
-  <button type="button" onclick="result = confirm(' . "'Did you find interest with a person who speaks a foreign language?'" . '); if(result){location.href=' . "'activity.php?status_id=5&resident_id=" . $row["resident_id"] . "'" . '}">Foreign Language</button><br>
-  <button type="button" onclick="result = confirm(' . "'Does this person sleep during the day?'" . '); if(result){location.href=' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . '}">Day Sleeper</button><br>
+  <button type="button" onclick="result = confirm(' . "'Was this number disconnected?'" . '); if(result){$.get(' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Disconnected</button><br>
+  <button type="button" onclick="result = confirm(' . "'Did nobody answer?'" . '); if(result){$.get(' . "'activity.php?status_id=2&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">No Answer</button><br>
+  <button type="button" onclick="result = confirm(' . "'Is this a do not call?'" . '); if(result){$.get(' . "'activity.php?status_id=3&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Do Not Call</button><br>
+  <button type="button" onclick="result = confirm(' . "'Did you contact someone?'" . '); if(result){$.get(' . "'activity.php?status_id=4&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Contacted</button><br>
+  <button type="button" onclick="result = confirm(' . "'Did you find interest with a person who speaks a foreign language?'" . '); if(result){$.get(' . "'activity.php?status_id=5&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Foreign Language</button><br>
+  <button type="button" onclick="result = confirm(' . "'Does this person sleep during the day?'" . '); if(result){$.get(' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Day Sleeper</button><br>
 <a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>
   ';
   /* comment out for campaign mode

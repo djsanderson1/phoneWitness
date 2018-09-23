@@ -39,7 +39,7 @@
       echo $row["ready_to_call"];
     }
   ?>
-  <h1><a href="activity.php">Next >> </a></h1>
+  <h1><a href="betweenCalls.php">Next >> </a></h1>
 <br><br><br><br>
 <a href="logout.php" class="navbar">Logout</a>
   <!--

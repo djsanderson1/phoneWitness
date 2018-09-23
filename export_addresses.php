@@ -57,6 +57,7 @@
           $res=$con->query("
           SELECT *
           FROM residents
+          LEFT JOIN territories USING(territory_id)
           WHERE" . $qryFilter . "
           LIMIT " . $howMany);
           while ($row = $res->fetch_assoc()) {
@@ -71,12 +72,16 @@
             else {
               $addressList = $addressList . $row["name"] . "," . $row["address"] . $daySleeper . "\r\n";
             }
-
+            global $territory_number;
+            $territory_number = $row['territory_number'];
           }
           echo "addressList: <pre>" . $addressList . "</pre>";
       }
       $publisher_id = $_POST['publisher_id'];
-      $sqlPublisherName = "SELECT first_name, last_name FROM publishers WHERE publisher_id = $publisher_id";
+      $sqlPublisherName = "
+        SELECT first_name, last_name
+        FROM publishers
+        WHERE publisher_id = $publisher_id";
       $res=$con->query($sqlPublisherName);
       while ($row = $res->fetch_assoc()) {
         global $strPublisherFirstName, $strPublisherLastName;
@@ -84,7 +89,7 @@
         $strPublisherLastName = $row['last_name'];
       }
       $todaysDate = date("m-d-Y");
-      $exportFileName = $strPublisherFirstName . "_" . $strPublisherLastName . "-" . $territory_number . $todaysDate . ".csv";
+      $exportFileName = "Territory Number " . $territory_number . " - " . $strPublisherFirstName . " " . $strPublisherLastName . " - " . $todaysDate . ".csv";
       $myfile = fopen($exportFileName, "w") or die("Unable to open file!");
       fwrite($myfile, $addressList);
       fclose($myfile);
@@ -122,7 +127,10 @@
         <option value="0">-- Please select a publisher --</option>
         <?php
         include 'mysqlConnect.php';
-        $res=$con->query("SELECT concat(first_name, ' ' ,last_name) AS full_name, publisher_id FROM publishers");
+        $res=$con->query("
+          SELECT concat(first_name, ' ' ,last_name) AS full_name, publisher_id
+          FROM publishers
+          ORDER BY full_name");
         while ($row = $res->fetch_assoc()) {
           $full_name = $row["full_name"];
           $publisher_id = $row["publisher_id"];
