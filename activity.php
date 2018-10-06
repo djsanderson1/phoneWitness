@@ -34,6 +34,21 @@
   <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body onload="playNotificationSound();">
+  Phone numbers ready to call:
+  <?php
+    $res=$con->query("
+    select count(*) AS ready_to_call from residents
+    left join territory_queue using(territory_id)
+    where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
+    AND territory_queue.order_number > 0
+    AND (number_of_tries < 3 OR number_of_tries IS NULL)
+    AND status_id2 IS NULL
+    AND (last_called_date < date(now()) OR last_called_date IS NULL)
+        ");
+    while ($row = $res->fetch_assoc()) {
+      echo $row["ready_to_call"];
+    }
+  ?><br>
 <button type="button" onclick="playButtonSound();" style="width:auto;"><img src="images/bell.png"></button>
   <h2 class="phone_number">
 <?php

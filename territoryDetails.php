@@ -25,7 +25,19 @@
         echo 'Territory Number: ' . $row['territory_number'] . '<br>
           Last Import Date: <br>
           Last Worked Date: <br>
+          <h2>Exported Addresses</h2><table><thead><tr><th>Export Date</th><th>Publisher</th><th>Returned</th><th>Action</th></tr></thead>
         ';
+        $resExport=$con->query("select DISTINCT(address_export_id), export_date, CONCAT(publishers.first_name, ' ', publishers.last_name) AS name, returned_date
+                          from address_exports
+                          INNER JOIN residents USING(address_export_id)
+                          LEFT JOIN publishers USING(publisher_id)
+                          where residents.territory_id = " . $_GET['territory_id'] .
+                          " ORDER BY " . $_GET['export_sortby'] . " " . $_GET['export_sortdir']
+                        ) or die($con->error);
+        while ($rowExport = $resExport->fetch_assoc()) {
+          echo '<tr><td>' . $rowExport['export_date'] . '</td><td>' . $rowExport['name'] . '</td><td>' . $rowExport['returned_date'] . '</td><td><a href="returnExport.php">Return</a></tr>';
+        }
+        echo '</table>';
       }
       ?>
       </p>

@@ -56,7 +56,7 @@
         }
       echo '
       <tr style="$refreshedRowStyle">
-        <td><a href="territoryDetails.php?territory_id=' . $row["territory_id"] . '">' . $row["territory_number"] . $refreshedMessage . '</a></td>
+        <td><a href="territoryDetails.php?territory_id=' . $row["territory_id"] . '&export_sortby=returned_date&export_sortdir=desc">' . $row["territory_number"] . $refreshedMessage . '</a></td>
         <td>' . $row["last_import_date"] . '</td>
         <td>' . $row["last_worked_date"] . '</td>
         <td><a href="' . $row["territoryImageUrl"] . '"><img src="' . $row["territoryImageUrl"] . '" height="50"></a></td>
