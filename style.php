@@ -75,5 +75,14 @@ label {
   width: 90%;
   max-width: 500px;
 }
+table {
+    border-spacing: 0px;
+}
+td {
+    border-top: #333333 1px solid;
+}
+tr:hover {
+    background-color: #333333;
+}
 </style>';
 ?>
