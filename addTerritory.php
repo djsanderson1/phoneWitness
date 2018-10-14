@@ -19,8 +19,10 @@
     if(!empty($territory_number)) {
       $imgTarget_dir = "images/";
       $target_file = $imgTarget_dir . "territoryFront-" . $territory_number . "." . substr(basename($_FILES["territoryImage"]["name"]),-3);
+      $imgSuccessFront = False;
       if(move_uploaded_file($_FILES["territoryImage"]["tmp_name"], $target_file)) {
         echo "territory image moved to " . $target_file . "<br>";
+        $imgSuccessFront = True;
       }
       else {
         echo "move failed for " . $target_file . "<br>";
@@ -85,6 +87,9 @@
         require_once('fxUpdateTerritory.php');
         $importDate = date("Y-m-d");
         updateTerritoryImportDate($territory_id, $importDate);
+        if($imgSuccessFront) {
+          updateTerritoryImageURL($territory_id, $target_file);
+        }
       }
       else {
         echo "Import of Residents Failed-";

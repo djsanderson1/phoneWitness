@@ -71,5 +71,9 @@ h2 {
 label {
   font-weight: bold;
 }
+.territoryImage {
+  width: 90%;
+  max-width: 500px;
+}
 </style>';
 ?>
