@@ -75,7 +75,6 @@
             global $territory_number;
             $territory_number = $row['territory_number'];
           }
-          echo "addressList: <pre>" . $addressList . "</pre>";
       }
       $publisher_id = $_POST['publisher_id'];
       $sqlPublisherName = "
@@ -114,7 +113,7 @@
           WHERE " . $qryFilter . "
           LIMIT " . $howMany
         );
-        header('Location: ' . $exportFileName);
+        echo '<meta http-equiv="refresh" content="1; url=/'.$exportFileName.'">';
         }
       ?>
     <form action="export_addresses.php" name="exportForm" method="POST">

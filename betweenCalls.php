@@ -9,7 +9,7 @@
     function timedPhoneCall() {
       document.getElementById("activityPage").style.display = "none";
       document.getElementById("waitMsg").style.display = "inline";
-      setTimeout(makePhoneCall, 10000);
+      setTimeout(makePhoneCall, 30000);
     }
     function makePhoneCall() {
       document.getElementById("showNext").style.display = "inline";

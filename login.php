@@ -49,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include 'style.php'; ?>
 </head>
 <body onload="document.getElementById('username').focus();">

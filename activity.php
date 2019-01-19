@@ -97,7 +97,7 @@ SELECT *
 while ($row = $res->fetch_assoc()) {
   // Line below displays resident's name for campaign mode
   echo $row["name"] . '<br><br>';
-  echo "<a href='tel:" . $row["phone_number"] . "'>" . $row["phone_number"] . "</a><br><br>" . $row["address"];
+  echo "<a href='tel:" . $row["phone_number"] . "' id='phoneNumber'>" . $row["phone_number"] . "</a><br><br>" . $row["address"];
   echo '</h2>';
   /* commented out for campaign mode */
   echo '
