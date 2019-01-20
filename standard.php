@@ -1,3 +1,4 @@
+<?php require_once('authenticate.php'); ?>
 <!doctype html>
 <html>
 <head><title>Phone Calls View</title>
@@ -22,7 +23,7 @@
       AND residents.address_export_id IS NULL) OR
       (
         residents.address_export_id IS NOT NULL AND
-        address_exports.returned_date IS NOT NULL       
+        address_exports.returned_date IS NOT NULL
         )
 
     )

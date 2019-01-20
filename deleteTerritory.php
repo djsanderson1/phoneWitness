@@ -1,3 +1,4 @@
+<?php require_once('authenticate.php'); ?>
 <?php
 $territory_id = $_GET['territory_id'];
 require_once('mysqlConnect.php');

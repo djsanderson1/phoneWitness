@@ -1,4 +1,5 @@
 <?php
+require_once('authenticate.php');
 if (isset($_POST['first_name'])) {
   include 'mysqlConnect.php';
   $first_name = $_POST['first_name'];

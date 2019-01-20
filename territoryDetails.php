@@ -1,3 +1,4 @@
+<?php require_once('authenticate.php'); ?>
 <!doctype html>
 <html>
   <head>
@@ -32,7 +33,7 @@
           <br>Last Import Date: '.$row['last_import_date'].'<br>
           Last Worked Date: '.$row['last_worked_date'].'<br>
           <button onclick="result = confirm(' . "'Are you sure that you want to delete territory number: " . $row["territory_number"] . "?'" . '); if(result){location.href=' . "'deleteTerritory.php?territory_id=" . $row["territory_id"] . "'" . '}">Delete</button>
-              <button href="export_addresses.php?territory_id=' . $row["territory_id"] . '">Export</button> 
+              <button href="export_addresses.php?territory_id=' . $row["territory_id"] . '">Export</button>
               <button onclick="result = confirm(' . "'Are you sure that you want to refresh territory number: " . $row["territory_number"] . "?'" . '); if(result){location.href=' . "'refreshTerritory.php?territory_id=" . $row["territory_id"] . "'" . '}" title="This refreshes the territory, marking all residents as not worked.">Refresh</button>
           <h2>Exported Addresses</h2><table><thead>
           <tr><th><a href="?territory_id='.$_GET['territory_id'].'&export_sortby=export_date&export_sortdir='.$thisExportSortdir.'">Export Date</a></th>

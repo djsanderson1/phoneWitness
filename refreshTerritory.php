@@ -1,4 +1,5 @@
 <?php
+require_once('authenticate.php');
   include 'mysqlConnect.php';
   if(isset($_GET["territory_id"])) {
   $con->query("
