@@ -12,11 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dbUser_type_id = '';
         $dbPassword = '';
         $dbUsername = '';
+        $dbUser_id = '';
         $res=$con->query("SELECT * FROM users where username = '$username'");
         while ($row = $res->fetch_assoc()) {
           $dbUser_type_id = $row['user_type_id'];
           $dbPassword = $row['password'];
           $dbUsername = $row['username'];
+          $dbUser_id = $row['user_id'];
         }
         if(
           $username == $dbUsername
@@ -27,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             session_start();
             $_SESSION["authenticated"] = 'true';
             $_SESSION["userTypeID"] = $dbUser_type_id;
+            $_SESSION["userID"] = $dbUser_id;
             if($dbUser_type_id == 1) {
               header('Location: admin.php');
             }
