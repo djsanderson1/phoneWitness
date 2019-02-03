@@ -1,13 +1,15 @@
-<?php require_once('authenticate.php'); ?>
+
 <!doctype html>
 <html>
   <head>
     <title>Territories</title>
     <script src="dropDown.js"></script>
-    <?php include 'style.php'; ?>
+<?php require_once('includes.php');
+require_once('navbar.php');
+?>
   </head>
   <body>
-    <?php include 'navbar.php'; ?>
+
     <h1>Territories</h1>
     <p>Here's the list of territories we have:</p>
     <table>
@@ -23,7 +25,7 @@
         </thead>
         <tbody>
     <?php
-    include 'mysqlConnect.php';
+
     $res=$con->query("SELECT * FROM territories");
     while ($row = $res->fetch_assoc()) {
 

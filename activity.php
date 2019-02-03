@@ -31,7 +31,7 @@
   </style>
   <title>Phone Calls View</title>
   <?php include 'style.php';
-    
+
   ?>
   <script src="jquery-3.3.1.min.js"></script>
 </head>
@@ -57,8 +57,8 @@
 if(isset($_GET['resident_id'])) {
   $resident_id = $_GET['resident_id'];
 }
-require_once('fxUpdateTerritory.php');
-require_once('fxGetResidentDetails.php');
+require_once('functions/fnTerritories.php');
+require_once('functions/fnResidents.php');
 if(isset($_GET["status_id"]) && isset($resident_id)) {
 // uses status_id2 field for do not calls and day sleepers
   if($_GET['status_id']=="3" or $_GET['status_id']=="6") {

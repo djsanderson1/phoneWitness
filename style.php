@@ -4,7 +4,7 @@ echo '
 <style>
 body, button, h2 {
   ';
-include 'mysqlConnect.php';
+require_once('includes.php');
 $res=$con->query("SELECT * FROM styles");
 while ($row = $res->fetch_assoc()) {
   $style_value = $row['style_value'];
