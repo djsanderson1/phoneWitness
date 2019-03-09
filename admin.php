@@ -12,5 +12,21 @@
       territories or click on the Add Territory link to add a new territory. You can
       also manage users from here as well.
     </p>
+    <h2>Global Settings</h2>
+    <div>
+      <form action="admin.php">
+      <div>
+        <label for="campaignMode">Campaign Mode</label>
+      </div>
+      <div>
+        <?php
+          require_once("csSettings.php");
+          $settings = New settings();
+          $campaign = New campaign();
+          $campaignMode=$campaign->getMode();
+        ?>
+        <input type="checkbox" name="campaignMode" <?php echo $campaignMode; ?>>
+      </div>
+    </div>
   </body>
 </html>
