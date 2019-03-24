@@ -31,7 +31,7 @@
   </style>
   <title>Phone Calls View</title>
   <?php include 'style.php';
-    
+
   ?>
   <script src="jquery-3.3.1.min.js"></script>
 </head>
@@ -102,20 +102,22 @@ while ($row = $res->fetch_assoc()) {
   echo "<a href='tel:" . $row["phone_number"] . "' id='phoneNumber'>" . $row["phone_number"] . "</a><br><br>" . $row["address"];
   echo '</h2>';
   /* commented out for campaign mode */
-  echo '
-  </h2>
-  <button type="button" onclick="result = confirm(' . "'Was this number disconnected?'" . '); if(result){$.get(' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Disconnected</button><br>
-  <button type="button" onclick="result = confirm(' . "'Did nobody answer?'" . '); if(result){$.get(' . "'activity.php?status_id=2&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">No Answer</button><br>
-  <button type="button" onclick="result = confirm(' . "'Is this a do not call?'" . '); if(result){$.get(' . "'activity.php?status_id=3&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Do Not Call</button><br>
-  <button type="button" onclick="result = confirm(' . "'Did you contact someone?'" . '); if(result){$.get(' . "'activity.php?status_id=4&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Contacted</button><br>
-  <button type="button" onclick="result = confirm(' . "'Did you find interest with a person who speaks a foreign language?'" . '); if(result){$.get(' . "'activity.php?status_id=5&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Foreign Language</button><br>
-  <button type="button" onclick="result = confirm(' . "'Does this person sleep during the day?'" . '); if(result){$.get(' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Day Sleeper</button><br>
-  <button type="button" onclick="result = confirm(' . "'Mismatched Address / Phone?'" . '); if(result){$.get(' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}">Mismatched Address / Phone</button><br>
-  <a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>
-  ';
-  /* comment out for campaign mode
-  echo '
-  <button type="button" onclick="result = confirm(' . "'Did you contact someone for the Invitation?'" . '); if(result){location.href=' . "'activity.php?status_id=7&resident_id=" . $row["resident_id"] . "'" . '}">Contacted for Invitation</button><br> '*/
+  echo '</h2>';
+  require_once("settings.php");
+  $lblContacted = "Contacted";
+  if(getCampaignMode() === "checked") {
+    // lbl is short for label
+    $lblContacted = "Completed";
+  }
+  $btnStart = '<button type="button" onclick="result = confirm(';
+  echo $btnStart . "'Was this number disconnected?'" . '); if(result){$.get(' . "'activity.php?status_id=1&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="disconnected">Disconnected</button><br class="disconnected">';
+  echo $btnStart . "'Did nobody answer?'" . '); if(result){$.get(' . "'activity.php?status_id=2&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="noAnswer">No Answer</button><br class="noAnswer">';
+  echo $btnStart . "'Is this a do not call?'" . '); if(result){$.get(' . "'activity.php?status_id=3&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="doNotCall">Do Not Call</button><br class="doNotCall">';
+  echo $btnStart . "'Did you contact someone?'" . '); if(result){$.get(' . "'activity.php?status_id=4&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="contacted">'.$lblContacted.'</button><br class="contacted">';
+  echo $btnStart . "'Did you find interest with a person who speaks a foreign language?'" . '); if(result){$.get(' . "'activity.php?status_id=5&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="foreignLanguage">Foreign Language</button><br class="foreignLanguage">';
+  echo $btnStart . "'Does this person sleep during the day?'" . '); if(result){$.get(' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="daySleeper">Day Sleeper</button><br class="daySleeper">';
+  echo $btnStart . "'Mismatched Address / Phone?'" . '); if(result){$.get(' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="mismatch">Mismatched Address / Phone</button><br class="mismatch">';
+  echo '<a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>';
 }
 ?>
   </h2>

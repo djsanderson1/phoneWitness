@@ -1,12 +1,12 @@
 <?php
 // all settings classes must be placed in this file
 class settings {
-  public $congregationID = 1;
   function __construct() {
     require_once("mysqlConnect.php");
     $this->getSettings();
   }
-  protected $getSettingsQuery = "
+  public $congregationID = 1;
+  public $getSettingsQuery = "
     SELECT *
     FROM settings
     WHERE congregation_id = " . $this->congregationID;

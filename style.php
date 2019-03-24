@@ -11,7 +11,50 @@ while ($row = $res->fetch_assoc()) {
   $style_name = $row['style_name'];
   echo $style_name . ':' . $style_value . ';';
 }
+require_once("settings.php");
+if(getCampaignMode() === "checked") {
+  $noDisplay = "display: none;";
+  $display = "display: inline;";
+  $mismatch = $noDisplay;
+  $daySleeper = $noDisplay;
+  $foreignLanguage = $noDisplay;
+  $contacted = $display;
+  $doNotCall = $display;
+  $noAnswer = $noDisplay;
+  $disconnected = $noDisplay;
+} else {
+  $noDisplay = "display: none;";
+  $display = "display: inline;";
+  $mismatch = $display;
+  $daySleeper = $display;
+  $foreignLanguage = $display;
+  $contacted = $display;
+  $doNotCall = $display;
+  $noAnswer = $display;
+  $disconnected = $display;
+}
 echo '
+}
+.mismatch {
+  '.$mismatch.'
+}
+.disconnected {
+  '.$disconnected.'
+}
+.noAnswer {
+  '.$noAnswer.'
+}
+.doNotCall {
+  '.$doNotCall.'
+}
+.contacted {
+  '.$contacted.'
+}
+.foreignLanguage {
+  '.$foreignLanguage.'
+}
+.daySleeper {
+  '.$daySleeper.'
 }
 ul.navbar {
     list-style-type: none;
