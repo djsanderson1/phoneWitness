@@ -127,5 +127,11 @@ td {
 tr:hover {
     background-color: #333333;
 }
+#dataChanged {
+  background-color: #333;
+  font-size: 12pt;
+  font-weight: bold;
+  color: #fff;
+}
 </style>';
 ?>
