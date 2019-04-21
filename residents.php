@@ -7,13 +7,22 @@ if(isset($_GET["territory_id"])) {
   while ($row = $res->fetch_assoc()) {
     $territory_number = $row['territory_number'];
   }
+} else {
+  $territory_number = 0;
+  $territory_id = 0;
 }
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Residents of Territory #<?php echo $territory_number ?></title>
+    <title><?php
+    if($territory_number > 0) {
+      echo "Residents of Territory #$territory_number";
+    } else {
+      echo "Call History";
+    }
+     ?></title>
     <?php include 'style.php'; ?>
   </head>
   <body>
@@ -28,7 +37,13 @@ if(isset($_GET["territory_id"])) {
       unset($_SESSION["residentChange"]);
     }
     ?>
-    <h1>Residents of Territory #<?php echo $territory_number ?></h1>
+    <h1><?php
+    if($territory_number > 0) {
+      echo "Residents of Territory #$territory_number";
+    } else {
+      echo "Call History";
+    }
+     ?></h1>
     <p><a href="addResident.php">Add New Resident</a></p>
     <table>
       <thead>
@@ -42,7 +57,20 @@ if(isset($_GET["territory_id"])) {
       <tbody>
         <?php
         include 'mysqlConnect.php';
-        $res=$con->query("SELECT * FROM residents INNER JOIN status_list USING(status_id) ORDER BY last_called_date desc") or die($con->error);
+        if($territory_id > 0) {
+          $residentsQuery =
+            "SELECT *
+               FROM residents
+               LEFT JOIN status_list USING(status_id)
+              WHERE territory_id = $territory_id";
+        } else {
+          $residentsQuery =
+            "SELECT *
+            FROM residents
+            INNER JOIN status_list USING(status_id)
+            ORDER BY last_called_date desc";
+        }
+        $res=$con->query($residentsQuery) or die($con->error);
         while ($row = $res->fetch_assoc()):
           $resident_id = $row['resident_id'];
           $name = $row['name'];
