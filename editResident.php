@@ -60,7 +60,7 @@ while ($row = $res->fetch_assoc()) :
                 $statusDisplayName = $row2['status_name'];
                 $thisStatusID = $row2['status_id'];
               ?>
-              <option value="<?php echo $thisStatusID; ?>"><?php echo $statusDisplayName; ?></option>
+              <option value="<?php echo $thisStatusID; ?>" <?php if($thisStatusID == $status_id) {echo 'selected';} ?>><?php echo $statusDisplayName; ?></option>
             <?php endwhile; ?>
             </select>
           </td>
