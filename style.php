@@ -133,5 +133,8 @@ tr:hover {
   font-weight: bold;
   color: #fff;
 }
+.nohover:hover {
+  background-color: inherit;
+}
 </style>';
 ?>
