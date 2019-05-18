@@ -42,7 +42,7 @@ if (isset($_POST['username'])) {
         </tr>
         <tr class="nohover">
           <td><label for="password">Password</label></td>
-          <td><input type="text" name="password"></td>
+          <td><input type="password" name="password"></td>
         </tr>
         <tr class="nohover">
           <td><label for="user_type_id">User Type</label></td>
