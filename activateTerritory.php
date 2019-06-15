@@ -16,7 +16,7 @@ require_once('authenticate.php');
     VALUES
     (
       ".$_GET['territory_id'].",
-      (select max(order_number)+1 FROM territory_queue as thisTerritory)
+      (select if(max(order_number) > 0, max(order_number)+1, 1) FROM territory_queue as thisTerritory)
     )
   ")) {
       header('Location: territories.php?activated='.$_GET['territory_id']);
