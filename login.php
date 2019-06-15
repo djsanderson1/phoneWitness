@@ -29,11 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION["authenticated"] = 'true';
             $_SESSION["userTypeID"] = $dbUser_type_id;
             $_SESSION["userID"] = $dbUserID;
-            if($dbUser_type_id == 1) {
-              header('Location: admin.php');
-            }
-            else {
-              header('Location: standard.php');
+            switch($dbUser_type_id) {
+              case 1:
+                header('Location: admin.php');
+                break;
+
+              case 2:
+                header('Location: standard.php');
+                break;
+
+              case 3:
+              header('Location: export_addresses.php');
+              break;
             }
 
         }

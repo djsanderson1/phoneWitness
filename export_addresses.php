@@ -21,6 +21,36 @@
         echo $territory_number;
       }
     }
+    else {
+    ?><form action="" method="get"><select name="territory_id"><?php
+      require_once('mysqlConnect.php');
+      $res=$con->query("
+      SELECT territory_queue.territory_id, territory_queue.order_number, territories.territory_number territory_number,
+        (select count(*) from residents
+        where
+        ((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
+                    AND (
+                      number_of_tries >= 3
+                      OR phone_number IS NULL
+                      OR phone_number = '')
+                    AND territory_id = territory_queue.territory_id) AS available_exports
+
+        FROM territory_queue
+        LEFT JOIN territories USING(territory_id)
+
+       WHERE territory_queue.order_number > 0
+       ");
+      while ($row = $res->fetch_assoc()) {
+        $territory_id = $row['territory_id'];
+        $territory_number = $row['territory_number'];
+        $order_number = $row['order_number'];
+        $available_exports = $row['available_exports'];
+        echo '<option value="'.$territory_id.'">Territory Number: '.$territory_number.' Available Addresses: '.$available_exports.'</option>';
+      } ?>
+    </select><button type="submit">Select for Export</button></form></h1>
+    <?php
+    exit;
+    }
     ?></h1>
     <p>Select how many addresses you want to export.</p>
     Available to export:
