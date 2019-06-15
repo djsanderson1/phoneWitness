@@ -1,11 +1,12 @@
 <?php
+require_once('authenticate.php');
 if (isset($_POST['first_name'])) {
   include 'mysqlConnect.php';
   $first_name = $_POST['first_name'];
   $last_name = $_POST['last_name'];
   $congregation = $_POST['congregation'];
   $phone1 = $_POST['phone1'];
-  $phone2 = $_POST['phone2'];
+  $email = $_POST['email'];
   $street_address = $_POST['street_address'];
   $city = $_POST['city'];
   $state = $_POST['state'];
@@ -17,7 +18,7 @@ if (isset($_POST['first_name'])) {
       last_name,
       congregation,
       phone1,
-      phone2,
+      email,
       street_address,
       city,
       state,
@@ -29,7 +30,7 @@ if (isset($_POST['first_name'])) {
       '" . $last_name . "',
       '" . $congregation . "',
       '" . $phone1 . "',
-      '" . $phone2 . "',
+      '" . $email . "',
       '" . $street_address . "',
       '" . $city . "',
       '" . $state . "',
@@ -71,8 +72,8 @@ if (isset($_POST['first_name'])) {
           <td><input type="text" name="phone1"></td>
         </tr>
         <tr>
-          <td><label for="phone2">Phone 2</label></td>
-          <td><input type="text" name="phone2"></td>
+          <td><label for="email">Email</label></td>
+          <td><input type="text" name="email"></td>
         </tr>
         <tr>
           <td><label for="street_address">Street Address</label></td>

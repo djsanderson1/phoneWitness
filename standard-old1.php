@@ -1,3 +1,4 @@
+<?php require_once('authenticate.php'); ?>
 <!doctype html>
 <html>
 <head>

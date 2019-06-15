@@ -1,3 +1,4 @@
+<?php require_once('authenticate.php'); ?>
 <!doctype html>
 
 <html>
@@ -7,17 +8,27 @@
   </head>
   <script>
     function timedPhoneCall() {
-      setTimeout(makePhoneCall, 10000);
+      document.getElementById("activityPage").style.display = "none";
+      document.getElementById("waitMsg").style.display = "inline";
+      setTimeout(makePhoneCall, 30000);
     }
     function makePhoneCall() {
       document.getElementById("showNext").style.display = "inline";
       document.getElementById("waitMsg").style.display = "none";
     }
+    function displayActivityPage() {
+      document.getElementById("showNext").style.display = "none";
+      document.getElementById("activityPage").style.display = "block";
+    }
+    function reloadData() {
+      $( "#activityPage" ).load( "activity.php" );
+    }
   </script>
-  <body onload="timedPhoneCall();">
-    <p id="waitMsg">Please pass this device to the next person.</p>
+  <body>
+    <p id="waitMsg" style="display: none;">Please pass this device to the next person.</p>
     <p id="showNext" style="display:none;">Click the link below when ready to make a call:<br><br>
-      <a href="activity.php">Make a Call</a>
+      <a href="#" onclick="displayActivityPage(); playNotificationSound(); reloadData();">Make a Call</a>
     </p>
+    <div id="activityPage" style="display:block;"><?php include 'activity.php'; ?></div>
   </body>
 </html>

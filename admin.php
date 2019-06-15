@@ -1,3 +1,25 @@
+<?php
+require_once('authenticate.php');
+require_once("settings.php");
+// if statement below checks for form submit
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if(isset($_POST['campaignMode'])) {
+      $campaignMode = $_POST['campaignMode'];
+  } else {
+    $campaignMode = "";
+  }
+  require_once("mysqlConnect.php");
+  noResponseSQL("
+    UPDATE settings
+    SET setting_value = '" . $campaignMode . "'
+    where congregation_id = 1
+    AND setting_type_id = 1
+    ");
+  echo "Campaign Mode set to: $campaignMode";
+  $_SERVER['REQUEST_METHOD'] == 'GET';
+}
+$campaignMode = getCampaignMode();
+?>
 <!doctype html>
 <html>
   <head>
@@ -11,5 +33,15 @@
       territories or click on the Add Territory link to add a new territory. You can
       also manage users from here as well.
     </p>
+    <h2>Global Settings</h2>
+    <div>
+      <form action="admin.php" method="post">
+      <div>
+        <label for="campaignMode" style="font-size: 12pt;">Campaign Mode</label>
+
+        <input type="checkbox" value="checked" name="campaignMode" <?php echo $campaignMode; ?>>
+        <input type="submit">
+      </div>
+    </div>
   </body>
 </html>

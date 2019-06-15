@@ -40,4 +40,13 @@ require_once('mysqlConnect.php');
         noResponseSQL($sql);
       }
     }
+    function updateTerritoryImageURL($territory_id = 0, $imageURL='') {
+      if($imageURL != '' AND $territory_id != 0) {
+        $sql = "
+          UPDATE territories
+             SET territoryImageUrl = '" . $imageURL . "'
+            WHERE territory_id = " . $territory_id;
+      }
+      noResponseSQL($sql);
+    }
     ?>

@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $dbUser_type_id = $row['user_type_id'];
           $dbPassword = $row['password'];
           $dbUsername = $row['username'];
+          $dbUserID = $row['user_id'];
         }
         if(
           $username == $dbUsername
@@ -27,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             session_start();
             $_SESSION["authenticated"] = 'true';
             $_SESSION["userTypeID"] = $dbUser_type_id;
+            $_SESSION["userID"] = $dbUserID;
             if($dbUser_type_id == 1) {
               header('Location: admin.php');
             }
@@ -49,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include 'style.php'; ?>
 </head>
 <body onload="document.getElementById('username').focus();">
