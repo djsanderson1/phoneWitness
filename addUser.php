@@ -5,18 +5,21 @@ if (isset($_POST['username'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
   $type = $_POST['user_type_id'];
+  $publisher_id = $_POST['publisher_id'];
   $qryString = "
     INSERT INTO users
     (
       username,
       password,
-      user_type_id
+      user_type_id,
+      publisher_id
       )
 
     VALUES (
       '" . $username . "',
       '" . $password . "',
-      '" . $type . "'
+      '" . $type . "',
+      '" . $publisher_id . "'
       )
     ";
   $con->query($qryString);
@@ -35,6 +38,7 @@ if (isset($_POST['username'])) {
     <?php include 'navbar.php'; ?>
     <br>
     <form action="addUser.php" name="addUser" method="post">
+
       <table>
         <tr class="nohover">
           <td><label for="username">Username</label></td>
@@ -42,7 +46,7 @@ if (isset($_POST['username'])) {
         </tr>
         <tr class="nohover">
           <td><label for="password">Password</label></td>
-          <td><input type="password" name="password"></td>
+          <td><input type="password" name="password" autocomplete="new-password"></td>
         </tr>
         <tr class="nohover">
           <td><label for="user_type_id">User Type</label></td>
@@ -56,6 +60,14 @@ if (isset($_POST['username'])) {
                 <option value="<?php echo $thisStatusID; ?>" <?php if($thisStatusID==3) {echo "selected";} ?>><?php echo $statusDisplayName; ?></option>
               <?php endwhile; ?>
               </select>
+          </td>
+        </tr>
+        <tr class="nohover">
+          <td><label for="publisher_id">Publisher</label></td>
+          <td>
+            <?php
+            require_once 'functions/publishers/getPublishers.php';
+            activePublishersDropDown(); ?>
           </td>
         </tr>
         <tr class="nohover">
