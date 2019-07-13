@@ -11,6 +11,19 @@ function activePublishers($fieldList='*', $fieldOrder='first_name ASC, last_name
   return $res;
 }
 
+function getPublisherFromUser($user_id = '') {
+  if($user_id == '') {
+    $user_id = $_SESSION["userID"];
+  }
+  $qry = "SELECT publisher_id FROM users where user_id = $user_id";
+  include('mysqlConnect.php');
+  $res=$con->query($qry) or die($con->error);
+  while ($row = $res->fetch_assoc()) {
+    $publisher_id = $row['publisher_id'];
+  }
+  return $publisher_id;
+}
+
 function activePublishersDropDown($name='publisher_id') {
   echo '<select name="' . $name . '" id="' . $name . '">';
   $res = activePublishers();

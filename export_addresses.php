@@ -81,8 +81,8 @@
         $territory_id = $_POST['territory_id'];
         $qryFilter = $qryFilterMostly . $territory_id;
         $howMany = $_POST['howMany'];
-
-        $publisher_id = $_POST['publisher_id'];
+        require_once('functions/publishers/getPublishers.php');
+        $publisher_id = getPublisherFromUser();
         $sqlPublisherName = "
           SELECT first_name, last_name
           FROM publishers
@@ -223,27 +223,6 @@
         <tr>
           <td><label for="howMany">How Many Addresses to Export?:</label></td>
           <td><input type="number" name="howMany" id="howMany"></td>
-        </tr>
-        <tr>
-          <td><label for="publisher_id">Publisher to check out to:</label></td>
-          <td>
-            <select name="publisher_id" id="publisher_id" onchange="if(this.value.substring(0,12)=='addPublisher'){location = this.value}">
-              <option value="0">-- Please select a publisher --</option>
-              <?php
-              include 'mysqlConnect.php';
-              $res=$con->query("
-                SELECT concat(first_name, ' ' ,last_name) AS full_name, publisher_id
-                FROM publishers
-                ORDER BY full_name");
-              while ($row = $res->fetch_assoc()) {
-                $full_name = $row["full_name"];
-                $publisher_id = $row["publisher_id"];
-                echo "<option value='" . $publisher_id . "'>" . $full_name . "</option>";
-              }
-              echo '<option value="addPublisher.php?territory_id=' . $territory_id . '" style="font-weight: bold;">Add a Publisher...</option>';
-              ?>
-            </select>
-          </td>
         </tr>
         <tr>
           <td><label for="fileType">Export File Type:</label></td>

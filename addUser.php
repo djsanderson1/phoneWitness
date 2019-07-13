@@ -67,13 +67,15 @@ if (isset($_POST['username'])) {
           <td>
             <?php
             require_once 'functions/publishers/getPublishers.php';
-            activePublishersDropDown(); ?>
+            activePublishersDropDown();
+            ?>
           </td>
         </tr>
         <tr class="nohover">
           <td colspan="2"><button type="submit">Add User</button><button type="button" onclick="window.history.back();">Cancel</button></td>
         </tr>
       </table>
+
     </form>
   </body>
 </html>
