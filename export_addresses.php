@@ -126,15 +126,13 @@
               global $territory_number;
               $territory_number = $row['territory_number'];
             }
+            $exportPath = $_SERVER['DOCUMENT_ROOT'] . "/exports/";
             $exportFileName = "Territory Number " . $territory_number . " - " . $strPublisherFirstName . " " . $strPublisherLastName . " - " . $todaysDate . ".csv";
-            $myfile = fopen($exportFileName, "w") or die("Unable to open file!");
+            $myfile = fopen($exportPath . $exportFileName, "w") or die("Unable to open file!");
             fwrite($myfile, $addressList);
             fclose($myfile);
-
-
-              echo '<meta http-equiv="refresh" content="1; url=/'.$exportFileName.'">';
+            echo '<meta http-equiv="refresh" content="1; url=/exports/'.$exportFileName.'">';
               break;
-
             case 'pdf':
             require('fpdf181/fpdf.php');
 
@@ -186,9 +184,10 @@
               $pdf->Cell(500,6,$address);
               $pdf->ln();
             }
+            $exportPath = $_SERVER['DOCUMENT_ROOT'] . "/exports/";
             $exportFileName = "Territory Number " . $territory_number . " - " . $strPublisherFirstName . " " . $strPublisherLastName . " - " . $todaysDate . ".pdf";
-            $pdf->Output('F',$exportFileName);
-            echo '<meta http-equiv="refresh" content="1; url=/'.$exportFileName.'">';
+            $pdf->Output('F',$exportPath.$exportFileName);
+            echo '<meta http-equiv="refresh" content="1; url=/exports/'.$exportFileName.'">';
               break;
           }
 

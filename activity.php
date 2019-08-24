@@ -33,7 +33,7 @@
   <?php include 'style.php';
 
   ?>
-  <script src="jquery-3.3.1.min.js"></script>
+  <script src="/js/jquery-3.3.1.min.js"></script>
 </head>
 <body onload="playNotificationSound();">
   Phone numbers ready to call:

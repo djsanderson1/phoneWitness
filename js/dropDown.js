@@ -10,19 +10,17 @@ function territoryActionList(id,territory_number) {
         confirmedRedirect(url,msg);
         break;
       case "export":
-        var msg = "Are you sure you want to export territory number " + territory_number + "?";
-        var url = "deleteTerritory.php?territory_id=" + territory_id;
-        confirmedRedirect(url,msg);
+        var url = "exportTerritory.php?territory_id=" + territory_id;
+        location.href=url;
         break;
       case "refresh":
         var msg = "Are you sure you want to refresh territory number " + territory_number + "?";
-        var url = "deleteTerritory.php?territory_id=" + territory_id;
+        var url = "refreshTerritory.php?territory_id=" + territory_id;
         confirmedRedirect(url,msg);
         break;
       case "viewExport":
-        var msg = "Are you sure you want to view exported addresses for territory number " + territory_number + "?";
         var url = "viewExportedAddresses.php?territory_id=" + territory_id;
-        confirmedRedirect(url,msg);
+        location.href=url;
         break;
     }
   }

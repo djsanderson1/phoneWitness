@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>Users</title>
-    <script src="dropDown.js"></script>
+    <script src="/js/dropDown.js"></script>
     <?php include 'style.php'; ?>
   </head>
   <body>
