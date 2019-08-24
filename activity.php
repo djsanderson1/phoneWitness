@@ -3,12 +3,9 @@
 <head>
   <script type = "text/javascript" >
     function playNotificationSound() {
-      var notification = new Audio('audio/notification.mp3');
+      var randomNum = Math.floor(Math.random() * 10)+1;
+      var notification = new Audio('audio/notification' + randomNum + '.mp3');
       notification.play();
-    }
-    function playButtonSound() {
-      var playButton = new Audio('audio/playButton.mp3');
-      playButton.play();
     }
   </script>
   <style>
@@ -51,7 +48,7 @@
       echo $row["ready_to_call"];
     }
   ?><br>
-<button type="button" onclick="playButtonSound();" style="width:auto;"><img src="images/bell.png"></button>
+<button type="button" onclick="playNotificationSound();" style="width:auto;"><img src="images/bell.png"></button>
   <h2 class="phone_number">
 <?php
 if(isset($_GET['resident_id'])) {

@@ -70,6 +70,7 @@
         <td>' . $row["last_import_date"] . '</td>
         <td>' . $row["last_worked_date"] . '</td>
         <td><a href="' . $row["territoryImageUrl"] . '"><img src="' . $row["territoryImageUrl"] . '" height="50"></a></td>
+        <td>' . $available_to_export . '</td>
         <td>
         <select name="actionList" onChange="territoryActionList(this.id,' . $row["territory_number"] . ')" id="territory_id' . $row["territory_id"] . '">
           <option>-- Please Select an Action --</option>

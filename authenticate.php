@@ -24,6 +24,8 @@ switch($_SESSION["userTypeID"]) {
   switch (basename($_SERVER['PHP_SELF'])) {
     case 'standard.php':
       break;
+    case 'betweenCalls.php':
+      break;
 
     default:
       echo 'You do not have access to this page. Please go <a href="javascript:history.back()">back</a>.'.basename($_SERVER['PHP_SELF']);
