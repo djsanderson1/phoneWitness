@@ -13,13 +13,19 @@
       $territory_id = $_GET['territory_id'];
       require_once('mysqlConnect.php');
       $res=$con->query("
-      SELECT territory_number
+      SELECT territory_number, territoryImageUrl
         FROM territories
        WHERE territory_id = $territory_id");
       while ($row = $res->fetch_assoc()) {
         global $territory_number;
         $territory_number = $row["territory_number"];
         echo $territory_number;
+        if($row['territoryImageUrl'] == "") {
+          echo '<h3>No image</h3>';
+        }
+        else {
+          echo '<br><a href="' . $row['territoryImageUrl'] . '" target="_blank"><img src="' . $row['territoryImageUrl'] . '" class="territoryImage"></a>';
+        }
       }
     }
     else {
