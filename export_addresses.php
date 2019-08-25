@@ -1,5 +1,6 @@
-<?php require_once('authenticate.php'); ?>
 <!doctype html>
+<?php require_once('authenticate.php'); ?>
+
 <html>
   <head>
     <title>Admin</title>
@@ -78,8 +79,11 @@
         FROM residents
         WHERE" . $qryFilter
             );
+            global $totalAddresses;
         while ($row = $res->fetch_assoc()) {
           echo $row["total_addresses"];
+          global $totalAddresses;
+          $totalAddresses = $row["total_addresses"];
         }
       //  echo "<br>" . $qryFilter;
       }
@@ -222,12 +226,12 @@
 
         }
       ?>
-    <form action="export_addresses.php?territory_id=<?php echo $territory_id; ?>" name="exportForm" method="POST">
+    <form action="export_addresses.php?territory_id=<?php echo $territory_id; ?>" name="exportForm" method="POST" onsubmit="return howManyTest();">
       <input type="hidden" name="territory_id" value="<?php echo $territory_id; ?>">
       <table class="frm2Col">
         <tr>
           <td><label for="howMany">How Many Addresses to Export?:</label></td>
-          <td><input type="number" name="howMany" id="howMany"></td>
+          <td><input type="number" name="howMany" id="howMany" onchange="return howManyTest();" onblur="return howManyTest();"></td>
         </tr>
         <tr>
           <td><label for="fileType">Export File Type:</label></td>
@@ -244,5 +248,18 @@
         </tr>
       </table>
     </form>
+    <script>
+    function howManyTest() {
+      var howMany = document.getElementById("howMany");
+      var maxNum = <?php echo $totalAddresses; ?>;
+      if(howMany.value > 0 && howMany.value <= maxNum) {
+        return true;
+      } else {
+        alert("Invalid number to export");
+        return false;
+      }
+    }
+    </script>
   </body>
+
 </html>
