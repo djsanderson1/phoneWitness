@@ -68,6 +68,7 @@ if(isset($_GET["status_id"]) && isset($resident_id)) {
     UPDATE residents
     SET " . $statusField . " = " . $_GET['status_id'] . ",
     last_called_date = date(now()),
+    last_called_time = time(now()),
     number_of_tries = COALESCE(number_of_tries,0)+1
     WHERE resident_id = " . $_GET['resident_id']
   );

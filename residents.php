@@ -68,7 +68,8 @@ if(isset($_GET["territory_id"])) {
             "SELECT *
             FROM residents
             INNER JOIN status_list USING(status_id)
-            ORDER BY last_called_date desc";
+            ORDER BY last_called_date desc,
+            last_called_time desc";
         }
         $res=$con->query($residentsQuery) or die($con->error);
         while ($row = $res->fetch_assoc()):
@@ -83,7 +84,7 @@ if(isset($_GET["territory_id"])) {
           <td><?php echo $name ?></td>
           <td><?php echo $row['phone_number']; ?></td>
           <td><?php echo $row['address']; ?></td>
-          <td><?php echo date('n/j/Y', $last_called); ?></td>
+          <td><?php echo date('n/j/Y', $last_called) . " " . $row['last_called_time']; ?></td>
           <td>
             <?php
 
