@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $dbUser_type_id = $row['user_type_id'];
           $dbPassword = $row['password'];
           $dbUsername = $row['username'];
-          $dbUser_id = $row['user_id'];
+          $dbUserID = $row['user_id'];
         }
         if(
           $username == $dbUsername
@@ -29,12 +29,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             session_start();
             $_SESSION["authenticated"] = 'true';
             $_SESSION["userTypeID"] = $dbUser_type_id;
-            $_SESSION["userID"] = $dbUser_id;
-            if($dbUser_type_id == 1) {
-              header('Location: admin.php');
-            }
-            else {
-              header('Location: standard.php');
+            $_SESSION["userID"] = $dbUserID;
+            switch($dbUser_type_id) {
+              case 1:
+                header('Location: admin.php');
+                break;
+
+              case 2:
+                header('Location: standard.php');
+                break;
+
+              case 3:
+              header('Location: export_addresses.php');
+              break;
             }
 
         }

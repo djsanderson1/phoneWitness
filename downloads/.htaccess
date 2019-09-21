@@ -1,0 +1,4 @@
+AuthUserFile C:/wamp64/www/phoneWitness/.htpasswd
+AuthName "Please Enter User & PW"
+AuthType Basic
+require valid-user

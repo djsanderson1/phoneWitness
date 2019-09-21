@@ -21,6 +21,8 @@
           $thisExportSortdir = 'asc';
         }
         echo $row['territory_number'] . '<br>';
+        $territory_id = $_GET['territory_id'];
+        echo '<a href="residents.php?territory_id='.$territory_id.'">View Residents</a>';
         if($row['territoryImageUrl'] == "") {
           echo '<h3>No image</h3>';
         }
