@@ -1,5 +1,8 @@
 <!doctype html>
-<?php require_once('authenticate.php'); ?>
+<?php
+require_once('authenticate.php');
+require_once('getPublishers.php'); 
+?>
 
 <html>
   <head>
@@ -85,6 +88,7 @@
           global $totalAddresses;
           $totalAddresses = $row["total_addresses"];
         }
+
       //  echo "<br>" . $qryFilter;
       }
       if(isset($_POST['howMany'])) {
