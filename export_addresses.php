@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
 require_once('authenticate.php');
-require_once('getPublishers.php'); 
+require_once('functions/publishers/getPublishers.php');
 ?>
 
 <html>
@@ -155,38 +155,37 @@ require_once('getPublishers.php');
 
             // headers
             $pdf->SetFont('Arial','B',14);
-            $pdf->Cell(100,10,'Territory #'.$territory_number);
+            $pdf->Cell(100,10,'Territory #'.$territory_number.' Checked Out to: '.$strPublisherFirstName.' '.$strPublisherLastName.' '.date("m/d/Y"));
             $pdf->ln();
-            $pdf->SetFont('Arial','B',12);
+            $pdf->SetFont('Arial','B',11);
             $pdf->Cell(75,5,'Name');
             $pdf->Cell(500,5,'Address');
             $pdf->ln();
-            $pdf->SetFont('Arial','',12);
+            $pdf->SetFont('Arial','',11);
 
             $paginationCounter = 0;
             while ($row = $res->fetch_assoc()) {
               $paginationCounter++;
-              if($paginationCounter > 39) {
+              if($paginationCounter > 40) {
                 // creates new page
                 $pdf->AddPage('P','Letter');
 
                 // headers
                 $pdf->SetFont('Arial','B',14);
-                $pdf->Cell(100,10,'Territory #'.$territory_number);
+                $pdf->Cell(100,10,'Territory #'.$territory_number.' Checked Out to: '.$strPublisherFirstName.' '.$strPublisherLastName.' '.date("m/d/Y"));
                 $pdf->ln();
-                $pdf->SetFont('Arial','B',12);
+                $pdf->SetFont('Arial','B',11);
                 $pdf->Cell(75,5,'Name');
                 $pdf->Cell(500,5,'Address');
                 $pdf->ln();
-                $pdf->SetFont('Arial','',12);
+                $pdf->SetFont('Arial','',11);
 
                 // reset counter
                 $paginationCounter = 1;
               }
+              $daySleeper = "";
               if($row["status_id2"]==6) {
                 $daySleeper = "Day Sleeper";
-              } else {
-                $daySleeper = "";
               }
               $name = $row["name"];
               $address = $row["address"];
@@ -194,8 +193,8 @@ require_once('getPublishers.php');
               $territory_number = $row['territory_number'];
 
               // add cells for each line
-              $pdf->Cell(75,6,$name);
-              $pdf->Cell(500,6,$address);
+              $pdf->Cell(75,5.8,$name);
+              $pdf->Cell(500,5.8,$address);
               $pdf->ln();
             }
             $exportPath = $_SERVER['DOCUMENT_ROOT'] . "/exports/";
@@ -235,7 +234,7 @@ require_once('getPublishers.php');
       <table class="frm2Col">
         <tr>
           <td><label for="howMany">How Many Addresses to Export?:</label></td>
-          <td><input type="number" name="howMany" id="howMany" onchange="return howManyTest();" onblur="return howManyTest();"></td>
+          <td><input type="number" name="howMany" id="howMany" onchange="return howManyTest();"></td>
         </tr>
         <tr>
           <td><label for="fileType">Export File Type:</label></td>
