@@ -14,6 +14,7 @@ echo '
   echo '
   <ul class="navbar">
     <li class="navbar"><a href="logout.php" class="navbar">Logout</a></li>
+    <li class="navbar"><a href="profile.php" class="navbar">Profile</a></li>
   </ul>';
 }
 ?>
