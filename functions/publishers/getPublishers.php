@@ -25,7 +25,7 @@ function getPublisherFromUser($user_id = '') {
 }
 
 function activePublishersDropDown($name='publisher_id') {
-  echo '<select name="' . $name . '" id="' . $name . '">';
+  echo '<select name="' . $name . '" id="' . $name . '"><option value="0"></option>';
   $res = activePublishers();
   while ($row = $res->fetch_assoc()) {
     echo '<option value="' . $row['publisher_id'] . '">' . $row['first_name'] . ' ' . $row['last_name'] . '</option>';

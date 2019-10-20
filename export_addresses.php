@@ -96,7 +96,11 @@ require_once('functions/publishers/getPublishers.php');
         $qryFilter = $qryFilterMostly . $territory_id;
         $howMany = $_POST['howMany'];
         require_once('functions/publishers/getPublishers.php');
-        $publisher_id = getPublisherFromUser();
+        if(isset($_POST['publisher_id'])) {
+          $publisher_id = $_POST['publisher_id'];
+        } else {
+          $publisher_id = getPublisherFromUser();
+        }
         $sqlPublisherName = "
           SELECT first_name, last_name
           FROM publishers
@@ -227,11 +231,21 @@ require_once('functions/publishers/getPublishers.php');
       }
 
 
-        }
+    }
       ?>
     <form action="export_addresses.php?territory_id=<?php echo $territory_id; ?>" name="exportForm" method="POST" onsubmit="return howManyTest();">
       <input type="hidden" name="territory_id" value="<?php echo $territory_id; ?>">
       <table class="frm2Col">
+        <?php
+        if($_SESSION["userTypeID"] == 1) {
+        ?>
+        <tr>
+          <td><label for="fileType">Publisher to Check Out to:</label></td>
+          <td>
+            <?php activePublishersDropDown(); ?>
+          </td>
+        </tr>
+      <?php } ?>
         <tr>
           <td><label for="howMany">How Many Addresses to Export?:</label></td>
           <td><input type="number" name="howMany" id="howMany" onchange="return howManyTest();"></td>
@@ -256,10 +270,18 @@ require_once('functions/publishers/getPublishers.php');
       var howMany = document.getElementById("howMany");
       var maxNum = <?php echo $totalAddresses; ?>;
       if(howMany.value > 0 && howMany.value <= maxNum) {
+        return publisherTest();
         return true;
       } else {
         alert("Invalid number to export");
         return false;
+      }
+    }
+    function publisherTest() {
+      var publisherDropDown = document.getElementById("publisher_id");
+        if(publisherDropDown.value == "0") {
+          alert("Please select a publisher to check out to!");
+          return false;
       }
     }
     </script>
