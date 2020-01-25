@@ -3,9 +3,19 @@
 <head>
   <script type = "text/javascript" >
     function playNotificationSound() {
+      disableBell();
       var randomNum = Math.floor(Math.random() * 10)+1;
       var notification = new Audio('audio/notification' + randomNum + '.mp3');
       notification.play();
+    }
+    function disableBell() {
+      var bellButton = document.getElementById("bellButton");
+      bellButton.disabled = true;
+      setTimeout(enableBell, 15000);
+    }
+    function enableBell() {
+      var bellButton = document.getElementById("bellButton");
+      bellButton.disabled = false;
     }
   </script>
   <style>
@@ -48,7 +58,7 @@
       echo $row["ready_to_call"];
     }
   ?><br>
-<button type="button" onclick="playNotificationSound();" style="width:auto;"><img src="images/bell.png"></button>
+<button type="button" onclick="playNotificationSound();" style="width:auto;" id="bellButton"><img src="images/bell.png"></button>
   <h2 class="phone_number">
 <?php
 if(isset($_GET['resident_id'])) {
