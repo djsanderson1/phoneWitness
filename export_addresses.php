@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <?php
 require_once('authenticate.php');
 require_once('functions/publishers/getPublishers.php');
@@ -111,7 +111,7 @@ require_once('functions/publishers/getPublishers.php');
           $strPublisherFirstName = $row['first_name'];
           $strPublisherLastName = $row['last_name'];
         }
-        $todaysDate = date("m-d-Y");
+        $todaysDate = date("m-d-Y H.i.s");
 
         if(!$howMany) {
           $howMany = 0;
@@ -149,7 +149,8 @@ require_once('functions/publishers/getPublishers.php');
             $myfile = fopen($exportPath . $exportFileName, "w") or die("Unable to open file!");
             fwrite($myfile, $addressList);
             fclose($myfile);
-            echo '<meta http-equiv="refresh" content="1; url=/exports/'.$exportFileName.'">';
+            global $filePath;
+            $filePath = "/exports/".$exportFileName;
               break;
             case 'pdf':
             require('fpdf181/fpdf.php');
@@ -204,8 +205,8 @@ require_once('functions/publishers/getPublishers.php');
             $exportPath = $_SERVER['DOCUMENT_ROOT'] . "/exports/";
             $exportFileName = "Territory Number " . $territory_number . " - " . $strPublisherFirstName . " " . $strPublisherLastName . " - " . $todaysDate . ".pdf";
             $pdf->Output('F',$exportPath.$exportFileName);
-            echo '<meta http-equiv="refresh" content="1; url=/exports/'.$exportFileName.'">';
-              break;
+            global $filePath;
+            $filePath = '/exports/'.$exportFileName;
           }
 
           $con->query("
@@ -213,12 +214,14 @@ require_once('functions/publishers/getPublishers.php');
             address_exports
             (
               export_date,
-              publisher_id
+              publisher_id,
+              file_path
               )
 
               values (
                 now(),
-                $publisher_id
+                $publisher_id,
+                '$filePath'
                 )
           ");
           $con->query("
@@ -228,6 +231,7 @@ require_once('functions/publishers/getPublishers.php');
             WHERE " . $qryFilter . "
             LIMIT " . $howMany
           );
+          echo '<meta http-equiv="refresh" content="1; url=/exports/'.$exportFileName.'">';
       }
 
 
