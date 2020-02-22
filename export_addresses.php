@@ -272,12 +272,23 @@ require_once('functions/publishers/getPublishers.php');
     <script>
     function howManyTest() {
       var howMany = document.getElementById("howMany");
-      var maxNum = <?php echo $totalAddresses; ?>;
+      var maxNum = <?php
+      $publisher_id = getPublisherFromUser();
+      $remainingExports = getRemainingWeeklyExports($publisher_id);
+      if($remainingExports >= $totalAddresses) {
+        echo $totalAddresses;
+      } else {
+        echo $remainingExports;
+      }
+      ?>;
+      var publisherID = <?php echo $publisher_id; ?>;
+      var lastSaturday = <?php echo getLastSaturday(); ?>;
+      var thisWeeksExports = <?php echo getThisWeeksExports($publisher_id); ?>;
       if(howMany.value > 0 && howMany.value <= maxNum) {
         return publisherTest();
         return true;
       } else {
-        alert("Invalid number to export");
+        alert("Invalid number to export or you are over your limit for the week");
         return false;
       }
     }

@@ -96,7 +96,7 @@ function getThisWeeksExports($publisher) {
       from residents
       inner join address_exports using(address_export_id)
     where publisher_id = $publisher
-      and export_date between $lastSaturday AND curdate()";
+      and export_date between '$lastSaturday' AND curdate()";
   $res = $con->query($sql) or die($con->error);
   while ($row = $res->fetch_assoc()) {
     return $row['thisWeeksExports'];
@@ -128,6 +128,16 @@ function getUserTypeFromPublisher($publisher_id = 0) {
     return $user_type_id;
   } else {
     return 0;
+  }
+}
+
+function getRemainingWeeklyExports($publisher_id = 0) {
+  if($_SESSION["userTypeID"] != 1) {
+    $publisherMax = 80 - getThisWeeksExports($publisher_id);
+    return $publisherMax;
+  } else {
+    // code below runs if admin user
+    return 10000;
   }
 }
 ?>
