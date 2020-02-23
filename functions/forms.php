@@ -1,18 +1,29 @@
 <?php
+function getCheckboxSetting($value) {
+  if($value == '1') {
+    return 'checked';
+  } else {
+    return '';
+  }
+}
+
 function textField($fieldName, $currentValue = "", $label="") {
   $fieldLabel = fieldLabel($fieldName, $label);
   return '<tr>'.$fieldLabel.'<td><input type="text" name="'.$fieldName.'" id="'.$fieldName.'" value="'.$currentValue.'"></td></tr>';
 }
+
 function passwordField($fieldName = "", $currentValue = "", $label="") {
   $fieldLabel = fieldLabel($fieldName, $label);
   return '<tr>'.$fieldLabel.'<td><input type="password" name="'.$fieldName.'" value="'.$currentValue.'"></td></tr>';
 }
+
 function fieldLabel($fieldName, $label = "") {
   if($label == "") {
     $label = $fieldName;
   }
   return '<td><label for="'.$fieldName.'">'.$label.': </label></td>';
 }
+
 function checkUsername($username, $user_id) {
   include('/mysqlConnect.php');
   $sql = "select count(*) as same_names from users where user_id <> $user_id and username = '".$username."'";
@@ -26,6 +37,7 @@ function checkUsername($username, $user_id) {
     }
   }
 }
+
 function updateFromForm($post = 0, $table = 0, $keyField = 0, $keyValue = 0, $table2 = '', $keyField2 = '') {
   if($post === 0 or $table === 0 or $keyField === 0 or $keyValue === 0) {
     return "Missing Field Error:<br><br>Table: $table<br>Key Field: $keyField<br>Key Value: $keyValue";
