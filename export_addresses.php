@@ -50,6 +50,7 @@ require_once('functions/publishers/getPublishers.php');
         LEFT JOIN territories USING(territory_id)
 
        WHERE territory_queue.order_number > 0
+       ORDER BY CAST(territory_number AS UNSIGNED)
        ");
       while ($row = $res->fetch_assoc()) {
         $territory_id = $row['territory_id'];
