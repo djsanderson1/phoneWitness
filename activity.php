@@ -101,6 +101,7 @@ SELECT *
   AND (number_of_tries < 3 OR number_of_tries IS NULL)
   AND (phone_number IS NOT NULL)
   AND (phone_number <> '')
+  AND (residents.last_accessed_time < DATE_SUB(NOW(), INTERVAL 1 HOUR) OR residents.last_accessed_time IS NULL)
    ORDER BY territory_queue.order_number, last_called_date, resident_id
    LIMIT 1
     ");
@@ -128,7 +129,10 @@ while ($row = $res->fetch_assoc()) {
   echo $btnStart . "'Does this person sleep during the day?'" . '); if(result){$.get(' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="daySleeper">Day Sleeper</button><br class="daySleeper">';
   echo $btnStart . "'Mismatched Address / Phone?'" . '); if(result){$.get(' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="mismatch">Mismatched Address / Phone</button><br class="mismatch">';
   echo '<a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>';
+  $sql = "update residents SET last_accessed_time = now() WHERE resident_id = ".$row['resident_id'];
+  noResponseSQL($sql);
 }
+
 ?>
   </h2>
   <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><a href="logout.php" class="navbar">Logout</a>
