@@ -242,7 +242,7 @@ require_once('functions/publishers/getPublishers.php');
       <input type="hidden" name="territory_id" value="<?php echo $territory_id; ?>">
       <table class="frm2Col">
         <?php
-        if($_SESSION["userTypeID"] == 1) {
+        if($_SESSION["userTypeID"] == 1 || $_SESSION["userTypeID"] == 4) {
         ?>
         <tr>
           <td><label for="fileType">Publisher to Check Out to:</label></td>

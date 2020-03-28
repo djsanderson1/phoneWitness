@@ -132,7 +132,7 @@ function getUserTypeFromPublisher($publisher_id = 0) {
 }
 
 function getRemainingWeeklyExports($publisher_id = 0) {
-  if($_SESSION["userTypeID"] != 1) {
+  if($_SESSION["userTypeID"] != 1 && $_SESSION["userTypeID"] != 4) {
     $publisherMax = 80 - getThisWeeksExports($publisher_id);
     return $publisherMax;
   } else {

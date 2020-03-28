@@ -41,6 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               case 3:
               header('Location: export_addresses.php');
               break;
+
+              case 4:
+              header('Location: export_addresses.php');
+              break;
             }
 
         }
