@@ -105,6 +105,19 @@ button {
   font-weight: bold;
   margin: 10px;
 }
+.button {
+  background-color: #333;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.button:hover {
+  background-color: #999;
+}
 h2 {
   margin-top: 20px;
   margin-bottom: 20px;

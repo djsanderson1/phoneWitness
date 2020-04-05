@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               break;
 
               case 4:
-              header('Location: export_addresses.php');
+              header('Location: export.php');
               break;
             }
 

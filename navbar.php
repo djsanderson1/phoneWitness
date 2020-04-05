@@ -13,7 +13,7 @@ echo '
 } else {
   echo '
   <ul class="navbar">
-    <li class="navbar"><a href="/export_addresses.php" class="navbar">Export</a></li>
+    <li class="navbar"><a href="/export.php" class="navbar">Export</a></li>
     <li class="navbar"><a href="/profile.php" class="navbar">Profile</a></li>
     <li class="navbar"><a href="/logout.php" class="navbar">Logout</a></li>
   </ul>';
