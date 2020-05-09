@@ -28,11 +28,20 @@ $last_called_line = "last_called_date = '$last_called'";
 if($last_called === '') {
   $last_called_line = "last_called_date = NULL";
 }
+function fixBlankInt($int) {
+  if($int == '') {
+    return "NULL";
+  } else {
+    return $int;
+  }
+}
+$status = fixBlankInt($status);
+$number_of_tries = fixBlankInt($number_of_tries);
 $sql =
 "UPDATE residents
     SET
  name = '$name',
- status_id = '$status',
+ status_id = $status,
  address = '$address',
  phone_number = '$phone',
  $last_called_line,
