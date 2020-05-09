@@ -13,20 +13,47 @@
     <table>
         <thead>
         <tr>
-          <th><a href="?sortby=territory_number">Territory Number</a></th>
-          <th><a href="?sortby=last_import_date">Last Import Date</a></th>
-          <th><a href="?sortby=last_worked_date">Last Worked Date</a></th>
-          <th><a href="?sortby=territoryImageUrl">Territory Image</a></th>
-          <th>Available to Export</th>
+  <?php
+  // default sorting
+  $sortby  = 'territory_number';
+  $sortdir = 'ASC';
+  if(isset($_GET['sortby'])) {
+    $sortby = $_GET['sortby'];
+  }
+  if(isset($_GET['sortdir'])) {
+    $sortdir = $_GET['sortdir'];
+    if($sortdir == 'ASC') {
+      $nextSortdir = 'DESC';
+    } else {
+      $nextSortdir = 'ASC';
+    }
+  }
+  function sortLink($field, $display) {
+    global $sortby, $nextSortdir;
+    if($field == $sortby) {
+      return '<a href="?sortby='.$field.'&sortdir='.$nextSortdir.'">'.$display.'</a>';
+    } else {
+      return '<a href="?sortby='.$field.'&sortdir=ASC">'.$display.'</a>';
+    }
+  }
+  echo '<th>'.sortLink('territory_number', 'Territory Number').'</th>';
+  echo '<th>'.sortLink('last_import_date', 'Last Import Date').'</th>';
+  echo '<th>'.sortLink('last_worked_date', 'Last Worked Date').'</th>';
+  echo '<th>'.sortLink('territoryImageUrl', 'Territory Image').'</th>';
+  echo '<th>'.sortLink('available_to_export', 'Available to Export').'</th>';
+  // change sortby to cast if needed - must be after header fields display
+  if($sortby == 'territory_number' || $sortby == 'available_to_export') {
+    $sortby = 'CAST('.$sortby.' AS UNSIGNED)';
+  }
+  ?>
+
           <th>Action</th>
         </tr>
         </thead>
         <tbody>
     <?php
-    // default sorting
-    $defaultSortBy  = 'territory_number';
-    $defaultSortDir = 'ASC';
 
+/*
     if(isset($_GET['sortby'])) {
       $sortby = $_GET['sortby'];
       if(isset($_SESSION['sortdir'])) {
@@ -59,6 +86,7 @@
     if($sortby == 'territory_number') {
       $sortby = 'CAST(territory_number AS UNSIGNED)';
     }
+    */
     include 'mysqlConnect.php';
     $res=$con->query("
       SELECT  territories.territory_id,
@@ -67,7 +95,13 @@
               territories.last_worked_date,
               territories.territoryImageUrl,
               territories.territory_status,
-              territory_queue.order_number
+              territory_queue.order_number,
+              (SELECT COUNT(*) AS available_to_export FROM residents WHERE ((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
+                          AND (
+                            number_of_tries >= 3
+                            OR phone_number IS NULL
+                            OR phone_number = '')
+                          AND territory_id = territories.territory_id) AS available_to_export
         FROM  territories
     INNER JOIN territory_queue USING(territory_id)
     ORDER BY $sortby $sortdir
@@ -91,6 +125,7 @@
           $refreshedRowStyle = "";
           $refreshedMessage = "";
         }
+        /*
         $qryFilterMostly = "((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
                     AND (
                       number_of_tries >= 3
@@ -101,7 +136,8 @@
         while ($row2 = $res2->fetch_assoc()) {
           global $available_to_export;
           $available_to_export = $row2['available_to_export'];
-        }
+        } */
+        $available_to_export = $row['available_to_export'];
       echo '
       <tr style="$refreshedRowStyle">
         <td><a href="territoryDetails.php?territory_id=' . $row["territory_id"] . '&export_sortby=returned_date&export_sortdir=desc">' . $row["territory_number"] . $refreshedMessage . '</a></td>

@@ -149,5 +149,11 @@ tr:hover {
 .nohover:hover {
   background-color: inherit;
 }
+th a {
+    padding: 10px;
+}
+th a:hover {
+  background-color: black;
+}
 </style>';
 ?>
