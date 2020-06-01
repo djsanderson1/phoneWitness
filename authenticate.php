@@ -47,6 +47,9 @@ function allowExportOnly() {
     case 'export.php':
       break;
 
+    case 'exportHistory.php':
+      break;
+
     case 'export_phone_numbers.php':
     global $csAdminUserTypeID, $csElderExportsUserTypeID;
       if($_SESSION["userTypeID"] == $csElderExportsUserTypeID or $_SESSION["userTypeID"] == $csAdminUserTypeID) {
