@@ -5,7 +5,7 @@ require_once('authenticate.php');
   $con->query("
     UPDATE residents
     SET status_id = NULL,
-    last_called_date = NULL,
+    IF(status_id2 <> 3 AND status_id <> 3, last_called_date = NULL,)
     number_of_tries = NULL,
     address_export_id = NULL
     WHERE territory_id = " . $_GET['territory_id']
