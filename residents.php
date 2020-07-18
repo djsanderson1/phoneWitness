@@ -59,13 +59,14 @@ if(isset($_GET["territory_id"])) {
         include 'mysqlConnect.php';
         if($territory_id > 0) {
           $residentsQuery =
-            "SELECT *
+            "SELECT *, CONCAT(IF(status2.status_name IS NULL, '', status2.status_name), ' ', IF(status_list.status_name IS NULL, '', status_list.status_name))  AS new_status
                FROM residents
                LEFT JOIN status_list USING(status_id)
+               LEFT JOIN status_list AS status2 ON residents.status_id2 = status2.status_id
               WHERE territory_id = $territory_id";
         } else {
           $residentsQuery =
-            "SELECT *
+            "SELECT *, CONCAT(status_name, ' ', IF(do_not_call = 'y', 'DNC', '')) AS new_status
             FROM residents
             INNER JOIN status_list USING(status_id)
             ORDER BY last_called_date desc,
@@ -78,7 +79,7 @@ if(isset($_GET["territory_id"])) {
           $phone = $row['phone_number'];
           $address = $row['address'];
           $last_called = strtotime($row['last_called_date']);
-          $status = $row['status_name'];
+          $status = $row['new_status'];
           ?>
         <tr>
           <td><?php echo $name ?></td>
