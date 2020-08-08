@@ -44,7 +44,7 @@ while ($row = $res->fetch_assoc()) :
         </tr>
         <tr>
           <td><label for="last_called">Last Called</label></td>
-          <td><input name="last_called" type="text" value="<?php echo $last_called; ?>" readonly="readonly">
+          <td><input name="last_called" type="date" value="<?php echo $last_called; ?>">
             <button type="button" onclick="document.getElementsByName('last_called')[0].value='';" style="font-size: 12pt">Clear</button>
           </td>
         </tr>
