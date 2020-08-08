@@ -76,11 +76,11 @@
         printf("Error: %s\n", $con->error);
         echo "<br><br>Query is: " . $insertTerritoryQueue;
       }
-      $importResidents = "load data LOCAL infile 'C:/wamp64/www/phoneWitness/" . $target2_file . "' into table residents
+      $importResidents = "load data infile 'C:/wamp64/www/phoneWitness/" . $target2_file . "' into table residents
         FIELDS TERMINATED BY ','
         IGNORE 1 LINES
         (
-          name, address, phone_number, do_not_call, day_sleeper
+          name, address, phone_number, do_not_call, day_sleeper, melissa_address_key
 
           ) SET territory_id = " . $territory_id;
       if($con->query($importResidents)) {
@@ -126,7 +126,7 @@
       <label for="residentImport"><strong>Resident Import File:</strong><br>
         <p>This file must have the information formatted in a certain way. It will need to be a csv
         with the following field order and headings: Name, Address, Phone, Do Not Call,
-        Day Sleeper. The Do Not Call and Day Sleeper must have a single character "y"
+        Day Sleeper, Melissa Address Key(MAk). The Do Not Call and Day Sleeper must have a single character "y"
         for yes if they are Do Not Calls or Day Sleepers. If not, simply leave the field for day sleepers blank.</p>
       </label><br>
 
