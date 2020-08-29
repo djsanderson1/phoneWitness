@@ -140,4 +140,22 @@ function getRemainingWeeklyExports($publisher_id = 0) {
     return 10000;
   }
 }
+function getPublisherName($publisher_id = 0) {
+  if($publisher_id == "") {
+    $publisher_id = 0;
+  }
+  include('mysqlConnect.php');
+  $sql = "select concat(first_name, ' ', last_name) AS publisher_name from publishers where publisher_id = $publisher_id";
+  $res = $con->query($sql) or die($con->error.'<br>'.$sql);
+  $rowCount = 0;
+  while ($row = $res->fetch_assoc()) {
+    $rowCount++;
+    $publisher_name = $row['publisher_name'];
+  }
+  if($rowCount > 0) {
+    return $publisher_name;
+  } else {
+    return "";
+  }
+}
 ?>

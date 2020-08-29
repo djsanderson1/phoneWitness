@@ -34,14 +34,19 @@
   ?><br><br>
   Phone numbers ready to call:
   <?php
+  require_once("functions/publishers/getPublishers.php");
+  session_start();
+  $publisher_id = getPublisherFromUser($_SESSION["userID"]);
     $res=$con->query("
     select count(*) AS ready_to_call from residents
     left join territory_queue using(territory_id)
+    inner join territories ON territories.territory_id = territory_queue.territory_id
     where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
     AND territory_queue.order_number > 0
     AND (number_of_tries < 3 OR number_of_tries IS NULL)
     AND status_id2 IS NULL
     AND (last_called_date < date(now()) OR last_called_date IS NULL)
+    AND territories.assigned_publisher_id = '$publisher_id'
         ");
     while ($row = $res->fetch_assoc()) {
       echo $row["ready_to_call"];

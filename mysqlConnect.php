@@ -15,7 +15,7 @@ if (mysqli_connect_errno())
         else {
           echo $failMsg;
           printf("Error: %s\n", $con->error);
-          echo "<br><br>";
+          echo "<br><br>$sql";
         }
       }
     }
