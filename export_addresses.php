@@ -2,6 +2,11 @@
 <?php
 require_once('authenticate.php');
 require_once('functions/publishers/getPublishers.php');
+if(!isset($_SESSION)) {
+  session_start();
+}
+$publisher_id = getPublisherFromUser($_SESSION["userID"]);
+$user_type_id = $_SESSION["userTypeID"];
 ?>
 
 <html>
@@ -35,6 +40,10 @@ require_once('functions/publishers/getPublishers.php');
     else {
     ?><form action="" method="get"><select name="territory_id"><?php
       require_once('mysqlConnect.php');
+      $publisher_constraints = "";
+      if($user_type_id == 2 || $user_type_id == 3) {
+        $publisher_constraints = "AND territories.assigned_publisher_id = '$publisher_id'";
+      }
       $available_exports_sql = "(select count(*) from residents
       where
       ((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
@@ -52,6 +61,7 @@ require_once('functions/publishers/getPublishers.php');
 
        WHERE territory_queue.order_number > 0
        AND $available_exports_sql > 0
+       $publisher_constraints
        ORDER BY CAST(territory_number AS UNSIGNED)
        ");
       while ($row = $res->fetch_assoc()) {
