@@ -46,9 +46,11 @@
   Phone numbers ready to call:
   <?php
     require_once("functions/publishers/getPublishers.php");
-    session_start();
+    if(!isset($_SESSION)) {
+      session_start();
+    }
     $publisher_id = getPublisherFromUser($_SESSION["userID"]);
-    $res=$con->query("
+    $sql = "
     SELECT count(*) AS ready_to_call FROM residents
     LEFT JOIN territory_queue using(territory_id)
     INNER JOIN territories ON territories.territory_id = territory_queue.territory_id
@@ -58,9 +60,15 @@
     AND status_id2 IS NULL
     AND (last_called_date < date(now()) OR last_called_date IS NULL)
     AND territories.assigned_publisher_id = '$publisher_id'
-        ");
+    AND (residents.last_accessed_time < DATE_SUB(NOW(), INTERVAL 1 HOUR) OR residents.last_accessed_time IS NULL)
+        ";
+    $res=$con->query($sql);
     while ($row = $res->fetch_assoc()) {
       echo $row["ready_to_call"];
+      if($row['ready_to_call'] == 0) {
+        echo '<br><br>No phone numbers available. Please wait until tomorrow or check out more territory.<h3><a href="standard.php">Back</a>';
+        exit;
+      }
     }
   ?><br>
 <button type="button" onclick="playNotificationSound();" style="width:auto;" id="bellButton"><img src="images/bell.png"></button>
@@ -136,8 +144,10 @@ while ($row = $res->fetch_assoc()) {
   echo $btnStart . "'Does this person sleep during the day?'" . '); if(result){$.get(' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="daySleeper">Day Sleeper</button><br class="daySleeper">';
   echo $btnStart . "'Mismatched Address / Phone?'" . '); if(result){$.get(' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="mismatch">Mismatched Address / Phone</button><br class="mismatch">';
   echo '<a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>';
-  $sql = "update residents SET last_accessed_time = now() WHERE resident_id = ".$row['resident_id'];
-  noResponseSQL($sql);
+  if(!isset($_GET["status_id"]) && !isset($resident_id)) {
+    $sql = "update residents SET last_accessed_time = now() WHERE resident_id = ".$row['resident_id'];
+    noResponseSQL($sql);
+  }  
 }
 
 ?>

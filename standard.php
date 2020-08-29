@@ -35,7 +35,6 @@
   Phone numbers ready to call:
   <?php
   require_once("functions/publishers/getPublishers.php");
-  session_start();
   $publisher_id = getPublisherFromUser($_SESSION["userID"]);
     $res=$con->query("
     select count(*) AS ready_to_call from residents
@@ -47,6 +46,7 @@
     AND status_id2 IS NULL
     AND (last_called_date < date(now()) OR last_called_date IS NULL)
     AND territories.assigned_publisher_id = '$publisher_id'
+    AND (residents.last_accessed_time < DATE_SUB(NOW(), INTERVAL 1 HOUR) OR residents.last_accessed_time IS NULL)
         ");
     while ($row = $res->fetch_assoc()) {
       echo $row["ready_to_call"];

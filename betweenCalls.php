@@ -7,7 +7,7 @@
     <?php include 'style.php'; ?>
   </head>
   <script>
-    var currentCount = 45;
+    var currentCount = 1;
     function timedPhoneCall() {
       document.getElementById("activityPage").style.display = "none";
       document.getElementById("waitMsg").style.display = "inline";
@@ -43,6 +43,6 @@
     <p id="showNext" style="display:none;">Click the link below when ready to make a call:<br><br>
       <a href="#" onclick="displayActivityPage(); playNotificationSound(); reloadData();">Make a Call</a>
     </p>
-    <div id="activityPage" style="display:block;"><?php include 'activity.php'; ?></div>
+    <div id="activityPage" style="display:block;"></div>
   </body>
 </html>
