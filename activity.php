@@ -1,23 +1,6 @@
 <!doctype html>
 <html>
 <head>
-  <script type = "text/javascript" >
-    function playNotificationSound() {
-      disableBell();
-      var randomNum = Math.floor(Math.random() * 10)+1;
-      var notification = new Audio('audio/notification' + randomNum + '.mp3');
-      notification.play();
-    }
-    function disableBell() {
-      var bellButton = document.getElementById("bellButton");
-      bellButton.disabled = true;
-      setTimeout(enableBell, 15000);
-    }
-    function enableBell() {
-      var bellButton = document.getElementById("bellButton");
-      bellButton.disabled = false;
-    }
-  </script>
   <style>
     button {
       padding: 5px;
@@ -40,7 +23,7 @@
   <?php include 'style.php';
 
   ?>
-  <script src="/js/jquery-3.3.1.min.js"></script>
+  
 </head>
 <body onload="playNotificationSound();">
   Phone numbers ready to call:
@@ -71,7 +54,7 @@
       }
     }
   ?><br>
-<button type="button" onclick="playNotificationSound();" style="width:auto;" id="bellButton"><img src="images/bell.png"></button>
+
   <h2 class="phone_number">
 <?php
 if(isset($_GET['resident_id'])) {
@@ -147,7 +130,7 @@ while ($row = $res->fetch_assoc()) {
   if(!isset($_GET["status_id"]) && !isset($resident_id)) {
     $sql = "update residents SET last_accessed_time = now() WHERE resident_id = ".$row['resident_id'];
     noResponseSQL($sql);
-  }  
+  }
 }
 
 ?>

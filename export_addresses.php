@@ -18,6 +18,23 @@ $user_type_id = $_SESSION["userTypeID"];
   <body onload="exportForm.howMany.focus();">
     <?php include 'navbar.php'; ?>
     <h1>Export Addresses for territory number: <?php
+    if($user_type_id == 2 || $user_type_id == 3) {
+      require_once('mysqlConnect.php');
+      if(isset($_GET['territory_id'])) {
+        $territory_id = $_GET['territory_id'];
+        $res=$con->query("
+        SELECT count(*) as gotTerritory
+          FROM territories
+         WHERE territory_id = $territory_id
+         AND assigned_publisher_id = $publisher_id");
+        while ($row = $res->fetch_assoc()) {
+          if($row['gotTerritory'] == 0) {
+            echo "You do not have access to this territory.";
+            exit;
+          }
+        }
+      }      
+    }
     if(isset($_GET['territory_id'])) {
       $territory_id = $_GET['territory_id'];
       require_once('mysqlConnect.php');
