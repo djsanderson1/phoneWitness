@@ -2,6 +2,11 @@
 <?php
 require_once('authenticate.php');
 require_once('functions/publishers/getPublishers.php');
+if(!isset($_SESSION)) {
+  session_start();
+}
+$publisher_id = getPublisherFromUser($_SESSION["userID"]);
+$user_type_id = $_SESSION["userTypeID"];
 ?>
 
 <html>
@@ -13,6 +18,23 @@ require_once('functions/publishers/getPublishers.php');
   <body onload="exportForm.howMany.focus();">
     <?php include 'navbar.php'; ?>
     <h1>Export Addresses for territory number: <?php
+    if($user_type_id == 2 || $user_type_id == 3) {
+      require_once('mysqlConnect.php');
+      if(isset($_GET['territory_id'])) {
+        $territory_id = $_GET['territory_id'];
+        $res=$con->query("
+        SELECT count(*) as gotTerritory
+          FROM territories
+         WHERE territory_id = $territory_id
+         AND assigned_publisher_id = $publisher_id");
+        while ($row = $res->fetch_assoc()) {
+          if($row['gotTerritory'] == 0) {
+            echo "You do not have access to this territory.";
+            exit;
+          }
+        }
+      }      
+    }
     if(isset($_GET['territory_id'])) {
       $territory_id = $_GET['territory_id'];
       require_once('mysqlConnect.php');
@@ -35,6 +57,10 @@ require_once('functions/publishers/getPublishers.php');
     else {
     ?><form action="" method="get"><select name="territory_id"><?php
       require_once('mysqlConnect.php');
+      $publisher_constraints = "";
+      if($user_type_id == 2 || $user_type_id == 3) {
+        $publisher_constraints = "AND territories.assigned_publisher_id = '$publisher_id'";
+      }
       $available_exports_sql = "(select count(*) from residents
       where
       ((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
@@ -52,6 +78,7 @@ require_once('functions/publishers/getPublishers.php');
 
        WHERE territory_queue.order_number > 0
        AND $available_exports_sql > 0
+       $publisher_constraints
        ORDER BY CAST(territory_number AS UNSIGNED)
        ");
       while ($row = $res->fetch_assoc()) {

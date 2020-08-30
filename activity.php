@@ -1,23 +1,6 @@
 <!doctype html>
 <html>
 <head>
-  <script type = "text/javascript" >
-    function playNotificationSound() {
-      disableBell();
-      var randomNum = Math.floor(Math.random() * 10)+1;
-      var notification = new Audio('audio/notification' + randomNum + '.mp3');
-      notification.play();
-    }
-    function disableBell() {
-      var bellButton = document.getElementById("bellButton");
-      bellButton.disabled = true;
-      setTimeout(enableBell, 15000);
-    }
-    function enableBell() {
-      var bellButton = document.getElementById("bellButton");
-      bellButton.disabled = false;
-    }
-  </script>
   <style>
     button {
       padding: 5px;
@@ -40,25 +23,38 @@
   <?php include 'style.php';
 
   ?>
-  <script src="/js/jquery-3.3.1.min.js"></script>
+  
 </head>
 <body onload="playNotificationSound();">
   Phone numbers ready to call:
   <?php
-    $res=$con->query("
-    select count(*) AS ready_to_call from residents
-    left join territory_queue using(territory_id)
-    where (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
+    require_once("functions/publishers/getPublishers.php");
+    if(!isset($_SESSION)) {
+      session_start();
+    }
+    $publisher_id = getPublisherFromUser($_SESSION["userID"]);
+    $sql = "
+    SELECT count(*) AS ready_to_call FROM residents
+    LEFT JOIN territory_queue using(territory_id)
+    INNER JOIN territories ON territories.territory_id = territory_queue.territory_id
+    WHERE (status_id IN(1,2) OR status_id IS NULL) AND phone_number IS NOT NULL AND phone_number <> ''
     AND territory_queue.order_number > 0
     AND (number_of_tries < 3 OR number_of_tries IS NULL)
     AND status_id2 IS NULL
     AND (last_called_date < date(now()) OR last_called_date IS NULL)
-        ");
+    AND territories.assigned_publisher_id = '$publisher_id'
+    AND (residents.last_accessed_time < DATE_SUB(NOW(), INTERVAL 1 HOUR) OR residents.last_accessed_time IS NULL)
+        ";
+    $res=$con->query($sql);
     while ($row = $res->fetch_assoc()) {
       echo $row["ready_to_call"];
+      if($row['ready_to_call'] == 0) {
+        echo '<br><br>No phone numbers available. Please wait until tomorrow or check out more territory.<h3><a href="standard.php">Back</a>';
+        exit;
+      }
     }
   ?><br>
-<button type="button" onclick="playNotificationSound();" style="width:auto;" id="bellButton"><img src="images/bell.png"></button>
+
   <h2 class="phone_number">
 <?php
 if(isset($_GET['resident_id'])) {
@@ -94,6 +90,7 @@ SELECT *
   FROM territory_queue
   LEFT JOIN residents
   USING(territory_id)
+  LEFT JOIN territories ON territories.territory_id = territory_queue.territory_id
   WHERE territory_queue.territory_id > 0
   AND (last_called_date < date(now()) OR last_called_date IS NULL)
   AND (status_id IN(1,2) OR status_id IS NULL)
@@ -102,6 +99,7 @@ SELECT *
   AND (phone_number IS NOT NULL)
   AND (phone_number <> '')
   AND (residents.last_accessed_time < DATE_SUB(NOW(), INTERVAL 1 HOUR) OR residents.last_accessed_time IS NULL)
+  AND territories.assigned_publisher_id = '$publisher_id'
    ORDER BY territory_queue.order_number, last_called_date, resident_id
    LIMIT 1
     ");
@@ -129,8 +127,10 @@ while ($row = $res->fetch_assoc()) {
   echo $btnStart . "'Does this person sleep during the day?'" . '); if(result){$.get(' . "'activity.php?status_id=6&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="daySleeper">Day Sleeper</button><br class="daySleeper">';
   echo $btnStart . "'Mismatched Address / Phone?'" . '); if(result){$.get(' . "'activity.php?status_id=8&resident_id=" . $row["resident_id"] . "'" . ');timedPhoneCall();}" class="mismatch">Mismatched Address / Phone</button><br class="mismatch">';
   echo '<a href="standard.php" style="color:black;cursor:default;" class="noselect">Skip to Next</a>';
-  $sql = "update residents SET last_accessed_time = now() WHERE resident_id = ".$row['resident_id'];
-  noResponseSQL($sql);
+  if(!isset($_GET["status_id"]) && !isset($resident_id)) {
+    $sql = "update residents SET last_accessed_time = now() WHERE resident_id = ".$row['resident_id'];
+    noResponseSQL($sql);
+  }
 }
 
 ?>

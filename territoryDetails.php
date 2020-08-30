@@ -13,7 +13,8 @@
       include 'mysqlConnect.php';
       $res=$con->query("SELECT * FROM territories LEFT JOIN territory_queue USING(territory_id) where territory_id = " . $_GET['territory_id']);
       while ($row = $res->fetch_assoc()) {
-
+        global $assigned_publisher_id;
+        $assigned_publisher_id = $row['assigned_publisher_id'];
         if($_GET['export_sortdir']==="asc") {
           $thisExportSortdir = 'desc';
         }
@@ -37,6 +38,25 @@
           <button onclick="result = confirm(' . "'Are you sure that you want to delete territory number: " . $row["territory_number"] . "?'" . '); if(result){location.href=' . "'deleteTerritory.php?territory_id=" . $row["territory_id"] . "'" . '}">Delete</button>
               <button href="export_addresses.php?territory_id=' . $row["territory_id"] . '">Export</button>
               <button onclick="result = confirm(' . "'Are you sure that you want to refresh territory number: " . $row["territory_number"] . "?'" . '); if(result){location.href=' . "'refreshTerritory.php?territory_id=" . $row["territory_id"] . "'" . '}" title="This refreshes the territory, marking all residents as not worked.">Refresh</button>
+          <br>';
+          require_once('functions/publishers/getPublishers.php');
+          echo '<p><strong>Assigned To:</strong> '.getPublisherName($assigned_publisher_id).'</p>
+          <form action="assignTerritory.php">
+          <input type="hidden" value="'.$territory_id.'" name="territory_id">
+          <select name="assigned_publisher_id">
+            <option value="0"></option>';
+
+            $res3 = activePublishers();
+            while ($row = $res3->fetch_assoc()) {
+              $selected = '';
+              if($assigned_publisher_id == $row['publisher_id']){
+                $selected = 'selected';
+              }
+              echo '<option value="'.$row['publisher_id'].'"'.$selected.'>'.$row['first_name'].' '.$row['last_name'].'</option>';
+            }
+          echo '</select>
+          <button type="submit">Assign</button>
+          </form>
           <h2>Exported Addresses</h2><table><thead>
           <tr><th><a href="?territory_id='.$_GET['territory_id'].'&export_sortby=export_date&export_sortdir='.$thisExportSortdir.'">Export Date</a></th>
           <th><a href="?territory_id='.$_GET['territory_id'].'&export_sortby=name&export_sortdir='.$thisExportSortdir.'">Publisher</a></th>

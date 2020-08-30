@@ -10,6 +10,6 @@ require_once('authenticate.php');
     address_export_id = NULL
     WHERE territory_id = " . $_GET['territory_id']
   );
-  header('Location: territories.php?refreshed='.$_GET['territory_id']);
+  // header('Location: territories.php?refreshed='.$_GET['territory_id']);
 }
 ?>
