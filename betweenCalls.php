@@ -7,7 +7,7 @@
     <?php include 'style.php'; ?>
   </head>
   <script>
-    var currentCount = 45;
+    var currentCount = 0;
     function timedPhoneCall() {
       document.getElementById("activityPage").style.display = "none";
       document.getElementById("waitMsg").style.display = "inline";
@@ -32,7 +32,7 @@
         currentCount--;
       } else {
         countDown.style.display = "none";
-        currentCount = 45;
+        currentCount = 0;
         clearInterval(window.countdownInterval);
         makePhoneCall();
       }
