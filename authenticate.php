@@ -3,7 +3,7 @@ $csExportUserTypeID = 3;
 $csStandardUserTypeID = 2;
 $csElderExportsUserTypeID = 4;
 $csAdminUserTypeID = 1;
-
+require_once('functions/global.php');
 session_start();
 if(empty($_SESSION["authenticated"]) || $_SESSION["authenticated"] != 'true') {
     header('Location: login.php');
