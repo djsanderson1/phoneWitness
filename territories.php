@@ -9,7 +9,29 @@
   <body>
     <?php include 'navbar.php'; ?>
     <h1>Territories</h1>
-    <h2>Active Territories</h2>
+    <h2>Active Territories
+    <?php
+    $refreshedTerr = "";
+    if(isset($_GET['refreshed'])) {
+      $refreshedTerr = $_GET['refreshed'];
+    }
+    if($refreshedTerr == "all") :
+    ?>
+      - <span style="color: red;">Refreshed All!</span>
+    <?php
+      else:
+    ?>
+      <a
+      onclick="result =
+               confirm('Are you sure that you want to refresh all the territories?');
+               if(result){
+                 location.href='refreshAllTerritory.php';
+               }"
+      title="This refreshes the territory, marking all residents as not worked.">Refresh All Territories</a>
+    <?php
+      endif;
+    ?>
+    </h2>
     <table>
         <thead>
         <tr>
