@@ -33,7 +33,7 @@ $user_type_id = $_SESSION["userTypeID"];
             exit;
           }
         }
-      }      
+      }
     }
     if(isset($_GET['territory_id'])) {
       $territory_id = $_GET['territory_id'];
@@ -193,7 +193,12 @@ $user_type_id = $_SESSION["userTypeID"];
             $pdf->Cell(100,10,'Territory #'.$territory_number.' Checked Out to: '.$strPublisherFirstName.' '.$strPublisherLastName.' '.date("m/d/Y"));
             $pdf->ln();
             $pdf->SetFont('Arial','B',11);
+            $pdf->Cell(65,5,'DS = Day Sleeper');
+            $pdf->ln();
+            $pdf->ln();
+            $pdf->SetFont('Arial','B',11);
             $pdf->Cell(75,5,'Name');
+            $pdf->Cell(10,5,'DS');
             $pdf->Cell(500,5,'Address');
             $pdf->ln();
             $pdf->SetFont('Arial','',11);
@@ -201,7 +206,7 @@ $user_type_id = $_SESSION["userTypeID"];
             $paginationCounter = 0;
             while ($row = $res->fetch_assoc()) {
               $paginationCounter++;
-              if($paginationCounter > 40) {
+              if($paginationCounter > 38) {
                 // creates new page
                 $pdf->AddPage('P','Letter');
 
@@ -211,6 +216,7 @@ $user_type_id = $_SESSION["userTypeID"];
                 $pdf->ln();
                 $pdf->SetFont('Arial','B',11);
                 $pdf->Cell(75,5,'Name');
+                $pdf->Cell(10,5,'DS');
                 $pdf->Cell(500,5,'Address');
                 $pdf->ln();
                 $pdf->SetFont('Arial','',11);
@@ -219,8 +225,11 @@ $user_type_id = $_SESSION["userTypeID"];
                 $paginationCounter = 1;
               }
               $daySleeper = "";
+              $background=false;
               if($row["status_id2"]==6) {
-                $daySleeper = "Day Sleeper";
+                $daySleeper = "DS";
+                $pdf->SetFillColor(200,200,200);
+                $background=true;
               }
               $name = $row["name"];
               $address = $row["address"];
@@ -228,8 +237,9 @@ $user_type_id = $_SESSION["userTypeID"];
               $territory_number = $row['territory_number'];
 
               // add cells for each line
-              $pdf->Cell(75,5.8,$name);
-              $pdf->Cell(500,5.8,$address);
+              $pdf->Cell(75,5.8,$name,0,0,'L',$background);
+              $pdf->Cell(10,5.8,$daySleeper,0,0,'L',$background);
+              $pdf->Cell(500,5.8,$address,0,0,'L',$background);
               $pdf->ln();
             }
             $exportPath = $_SERVER['DOCUMENT_ROOT'] . "/exports/";

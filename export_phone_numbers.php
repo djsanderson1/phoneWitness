@@ -174,7 +174,12 @@ require_once('functions/publishers/getPublishers.php');
             $pdf->Cell(100,10,'Territory #'.$territory_number.' Checked Out to: '.$strPublisherFirstName.' '.$strPublisherLastName.' '.date("m/d/Y"));
             $pdf->ln();
             $pdf->SetFont('Arial','B',11);
+            $pdf->Cell(65,5,'DS = Day Sleeper');
+            $pdf->ln();
+            $pdf->ln();
+            $pdf->SetFont('Arial','B',11);
             $pdf->Cell(65,5,'Name');
+            $pdf->Cell(10,5,'DS');
             $pdf->Cell(35,5,'Phone Number');
             $pdf->Cell(500,5,'Address');
             $pdf->ln();
@@ -183,7 +188,7 @@ require_once('functions/publishers/getPublishers.php');
             $paginationCounter = 0;
             while ($row = $res->fetch_assoc()) {
               $paginationCounter++;
-              if($paginationCounter > 40) {
+              if($paginationCounter > 38) {
                 // creates new page
                 $pdf->AddPage('P','Letter');
 
@@ -193,6 +198,7 @@ require_once('functions/publishers/getPublishers.php');
                 $pdf->ln();
                 $pdf->SetFont('Arial','B',11);
                 $pdf->Cell(65,5,'Name');
+                $pdf->Cell(10,5,'DS');
                 $pdf->Cell(35,5,'Phone Number');
                 $pdf->Cell(500,5,'Address');
                 $pdf->ln();
@@ -202,8 +208,11 @@ require_once('functions/publishers/getPublishers.php');
                 $paginationCounter = 1;
               }
               $daySleeper = "";
+              $background=false;
               if($row["status_id2"]==6) {
-                $daySleeper = "Day Sleeper";
+                $daySleeper = "DS";
+                $pdf->SetFillColor(200,200,200);
+                $background=true;
               }
               $name = $row["name"];
               $address = $row["address"];
@@ -212,9 +221,10 @@ require_once('functions/publishers/getPublishers.php');
               $territory_number = $row['territory_number'];
 
               // add cells for each line
-              $pdf->Cell(65,5.8,$name);
-              $pdf->Cell(35,5.8,$phone_number);
-              $pdf->Cell(500,5.8,$address);
+              $pdf->Cell(65,5.8,$name,0,0,'L',$background);
+              $pdf->Cell(10,5.8,$daySleeper,0,0,'L',$background);
+              $pdf->Cell(35,5.8,$phone_number,0,0,'L',$background);
+              $pdf->Cell(500,5.8,$address,0,0,'L',$background);
               $pdf->ln();
             }
             $exportPath = $_SERVER['DOCUMENT_ROOT'] . "/exports/";
