@@ -44,7 +44,7 @@ if(isset($_GET["territory_id"])) {
       echo "Call History";
     }
      ?></h1>
-    <p><a href="addResident.php">Add New Resident</a></p>
+    <p><a href="addResident.php?territory_id=<?php echo $territory_id; ?>">Add New Resident</a></p>
     <table>
       <thead>
         <th>Name</th>
