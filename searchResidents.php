@@ -78,7 +78,6 @@
             ?>
           </td>
           <td>
-            <a href="viewResident.php?resident_id=<?php echo $resident_id; ?>&territory_id=<?php echo $territory_id; ?>">View</a> |
             <a href="editResident.php?resident_id=<?php echo $resident_id; ?>&territory_id=<?php echo $territory_id; ?>">Edit</a>
           </td>
         </tr>
