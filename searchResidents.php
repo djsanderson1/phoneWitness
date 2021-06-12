@@ -79,8 +79,7 @@
           </td>
           <td>
             <a href="viewResident.php?resident_id=<?php echo $resident_id; ?>&territory_id=<?php echo $territory_id; ?>">View</a> |
-            <a href="editResident.php?resident_id=<?php echo $resident_id; ?>&territory_id=<?php echo $territory_id; ?>">Edit</a> |
-            <a href="deleteResident.php?resident_id=<?php echo $resident_id; ?>&territory_id=<?php echo $territory_id; ?>" onclick="return confirm('Are you sure you want to delete this resident?');">Delete</a>
+            <a href="editResident.php?resident_id=<?php echo $resident_id; ?>&territory_id=<?php echo $territory_id; ?>">Edit</a>
           </td>
         </tr>
       <?php endwhile;
