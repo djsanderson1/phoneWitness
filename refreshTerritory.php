@@ -8,8 +8,8 @@ require_once('authenticate.php');
     last_called_date = NULL,
     number_of_tries = NULL,
     address_export_id = NULL
-    WHERE (status_id2 <> 3 or status_id2 IS NULL)
-      and (status_id <> 3 or status_id IS NULL)
+    WHERE (status_id2 NOT IN(3,5) or status_id2 IS NULL)
+      and (status_id NOT IN(3,5) or status_id IS NULL)
       AND territory_id = " . $_GET['territory_id']
   );
   header('Location: territories.php?refreshed='.$_GET['territory_id']);
