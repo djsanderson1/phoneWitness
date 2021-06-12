@@ -37,7 +37,9 @@ require_once('functions/publishers/getPublishers.php');
       require_once('mysqlConnect.php');
       $available_exports_sql = "(select count(*) from residents
       where
-      ((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
+      ((address_export_id IS NULL OR address_export_id = 0)
+        AND (status_id2 NOT IN(3,5) or status_id2 IS NULL)
+        AND (status_id NOT IN(3,5) or status_id IS NULL))
                   AND (
                     (
                       number_of_tries < 3
@@ -74,7 +76,9 @@ require_once('functions/publishers/getPublishers.php');
     Available to export:
       <?php
       include 'mysqlConnect.php';
-      $qryFilterMostly = "((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
+      $qryFilterMostly = "((address_export_id IS NULL OR address_export_id = 0)
+        AND (status_id2 NOT IN(3,5) or status_id2 IS NULL)
+        AND (status_id NOT IN(3,5) or status_id IS NULL))
                     AND (
                           (
                             number_of_tries < 3

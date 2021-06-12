@@ -61,14 +61,18 @@ $user_type_id = $_SESSION["userTypeID"];
       if($user_type_id == 2 || $user_type_id == 3) {
         $publisher_constraints = "AND territories.assigned_publisher_id = '$publisher_id'";
       }
-      $available_exports_sql = "(select count(*) from residents
-      where
-      ((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
-                  AND (
-                    number_of_tries >= 3
-                    OR phone_number IS NULL
-                    OR phone_number = '')
-                  AND territory_id = territory_queue.territory_id)";
+      $available_exports_sql = "(
+        SELECT COUNT(*) FROM residents
+          WHERE (
+            (address_export_id IS NULL OR address_export_id = 0)
+            AND (status_id2 NOT IN(3,5) or status_id2 IS NULL)
+            AND (status_id NOT IN(3,5) or status_id IS NULL)
+          )
+          AND (
+                number_of_tries >= 3
+                OR phone_number IS NULL
+                OR phone_number = '')
+          AND territory_id = territory_queue.territory_id)";
       $res=$con->query("
       SELECT territory_queue.territory_id, territory_queue.order_number, territories.territory_number territory_number,
         $available_exports_sql AS available_exports
@@ -97,12 +101,14 @@ $user_type_id = $_SESSION["userTypeID"];
     Available to export:
       <?php
       include 'mysqlConnect.php';
-      $qryFilterMostly = "((address_export_id IS NULL OR address_export_id = 0) AND (status_id2 <> 3 OR status_id2 IS NULL))
-                    AND (
-                      number_of_tries >= 3
-                      OR phone_number IS NULL
-                      OR phone_number = '')
-                    AND territory_id = ";
+      $qryFilterMostly = "((address_export_id IS NULL OR address_export_id = 0)
+        AND (status_id2 NOT IN(3,5) or status_id2 IS NULL)
+        AND (status_id NOT IN(3,5) or status_id IS NULL))
+        AND (
+          number_of_tries >= 3
+          OR phone_number IS NULL
+          OR phone_number = '')
+        AND territory_id = ";
       if(isset($_GET['territory_id'])) {
         $territory_id = $_GET['territory_id'];
         $qryFilter = $qryFilterMostly . $territory_id;
